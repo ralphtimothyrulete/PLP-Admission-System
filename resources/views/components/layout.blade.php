@@ -4,13 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://cdn.tailwindcss.com"></script>
+  @vite('resources/css/app.css')
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <title>{{ $heading ?? 'Home' }}</title>
-  
+
+  <!-- Include Pusher and Laravel Echo -->
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.1/echo.iife.min.js"></script>
+
+  <script>
+    // Configure Pusher and Echo
+    Pusher.logToConsole = true;
+    const pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
+      cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
+      encrypted: true,
+    });
+
+    const echo = new Echo({
+      broadcaster: 'pusher',
+      key: '{{ env("PUSHER_APP_KEY") }}',
+      cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
+      forceTLS: true
+    });
+
+    // Listen for real-time notifications
+    echo.private('notifications')
+      .listen('AdmissionUpdateEvent', (data) => {
+        alert(data.message); // You can customize this to show a better notification
+        let notificationArea = document.getElementById('notifications');
+        notificationArea.innerHTML += `<div class="notification bg-white p-2 border rounded shadow">${data.message}</div>`;
+      });
+  </script>
+</head>
+
 <body class="h-full">
+<div id="notifications" class="absolute top-0 right-0 p-4 z-50"></div>
   <div class="min-h-full">
     <nav class="bg-white shadow-md">
       <div class="mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,24 +67,21 @@
               </svg>
             </button>
             <!-- Profile Menu -->
-      
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                            <div class="w-10 rounded-full">
-                            <img
-                                alt="Avatar"
-                                src="{{ URL('storage/user.png') }}" />
-                            </div>
-                    </div>
-                    <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li><a href="{{ route('profile') }}">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="{{ route('logout') }}">Logout</a></li>
-                    </ul>
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                  <img alt="Avatar" src="{{ URL('storage/user.png') }}" />
                 </div>
-                </div>
+              </div>
+              <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                <li><a href="{{ route('profile') }}">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="{{ route('logout') }}">Logout</a></li>
+              </ul>
             </div>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile menu -->
@@ -82,12 +109,12 @@
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ $heading ?? '' }}</h1> <!-- Heading from child template -->
       </div>
     </header>
-    
-        <main>
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                {{ $slot }}
-        </div>
-        </main>
+
+    <main>
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        {{ $slot }}
+      </div>
+    </main>
   </div>
 </body>
 </html>

@@ -5,57 +5,68 @@
     <main class="container mx-auto p-8">
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold text-green-600 mb-1 font-poppins">STUDENT APPLICATION</h1>
-            <div class="text-right text-green-600 mb-1 font-bold">1 of 2</div>
+            <div class="text-right text-green-600 mb-1 font-bold font-poppins">1 of 2</div>
      <!-- Student Application Form -->
-        <form id="studentForm" action="{{ route('admissionform2') }}" method="GET">
+        <form id="studentForm" action="{{ route('admissionform2') }}" method="POST">
             @csrf
+
+            @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">Please fix the following errors:</strong>
+            <ul class="mt-2 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+         @endif
             <!-- Student Details Section -->
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg font-poppins">Student Details</h2>
-                <div class="bg-gray-100 p-4 rounded-b-lg">
+                <div class="bg-gray-100 p-4 rounded-b-lg font-poppins">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Surname(Apelyido)*</label>
+                            <label class="block mb-2 font-bold">Surname(Apelyido)*</label>
                             <input type="text" name="last_name" class="w-full p-2 border rounded" placeholder="Last Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Given Name(Pangalan)*</label>
+                            <label class="block mb-2 font-bold">Given Name(Pangalan)*</label>
                             <input type="text" name="first_name" class="w-full p-2 border rounded" placeholder="First Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Middle Name(Gitnang Pangalan)*</label>
+                            <label class="block mb-2 font-bold">Middle Name(Gitnang Pangalan)*</label>
                             <input type="text" name="middle_name" class="w-full p-2 border rounded" placeholder="Middle Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Suffix</label>
+                            <label class="block mb-2 font-bold">Suffix</label>
                             <input type="text" name="suffix" class="w-full p-2 border rounded" placeholder="(e.g. Jr.)">
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Age*</label>
-                            <input type="number" name="dob" class="w-full p-2 border rounded" placeholder="18" required>
+                            <label class="block mb-2 font-bold">Age*</label>
+                            <input type="number" name="" class="w-full p-2 border rounded" placeholder="18" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Sex(Kasarian)*</label>
-                                <select id="sexGender" name="sex" class="select p-2 border rounded w-full">
+                            <label class="block mb-2 font-bold">Sex(Kasarian)*</label>
+                                <select id="sexGender" name="sex" class="select p-2 border rounded w-full required">
                                     <option disabled selected>Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Contact Number*</label>
+                            <label class="block mb-2 font-bold">Contact Number*</label>
                             <input type="tel" name="number" class="w-full p-2 border rounded" placeholder="+63" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Religion*</label>
+                            <label class="block mb-2 font-bold">Religion*</label>
                             <input type="text" name="religion" class="w-full p-2 border rounded" placeholder="Roman Catholic" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Sports*</label>
+                            <label class="block mb-2 font-bold">Sports*</label>
                             <input type="text" name="sports" class="w-full p-2 border rounded" placeholder="Football" required>
                         </div>
                         <div>
-                        <label class="block mb-2 font-poppins font-bold">Residency Status*</label>
+                        <label class="block mb-2 font-bold">Residency Status*</label>
                             <select id="residencyStatus" name="residency_status" class="select p-2 border rounded w-full" onchange="handleResidencyChange()">
                                 <option disabled selected>Select Residency</option>
                                 <option value="Pasig Resident">Pasig Resident</option>
@@ -63,7 +74,7 @@
                             </select>
                         </div>
                         <div id="districtContainer" class="hidden mt-1">
-                            <label class="block mb-1 font-poppins font-bold">District*</label>
+                            <label class="block mb-1 font-bold">District*</label>
                             <select id="districtSelect" name="district" class="select p-2 border rounded w-full" onchange="handleDistrictChange()">
                                 <option disabled selected>Select District</option>
                                 <option value="district1">District 1</option>
@@ -71,7 +82,7 @@
                             </select>
                         </div>
                         <div id="barangayContainer1" class="hidden mt-1">
-                            <label class="block mb-2 font-poppins font-bold">Barangay*</label>
+                            <label class="block mb-2 font-bold">Barangay*</label>
                             <select id="barangaySelect1" name="barangay1" class="select p-2 border rounded w-full">
                                 <option disabled selected>Select Barangay</option>
                                 <option value="Bagong Ilog">Bagong Ilog</option>
@@ -100,7 +111,7 @@
                             </select>
                         </div>
                         <div id="barangayContainer2" class="hidden mt-1">
-                            <label class="block mb-2 font-poppins font-bold">Barangay*</label>
+                            <label class="block mb-2 font-bold">Barangay*</label>
                             <select id="barangaySelect2" name="barangay2" class="select p-2 border rounded w-full">
                                 <option disabled selected>Select Barangay</option>
                                 <option value="Dela Paz">Dela Paz</option>
@@ -113,15 +124,15 @@
                             </select>
                         </div>
                         <div id="nonPasigInputContainer" class="hidden mt-1">
-                            <label class="block mb-1 font-poppins font-bold">Enter Residency*</label>
+                            <label class="block mb-1 font-bold">Enter Residency*</label>
                             <input type="text" id="nonPasigInput" name="non_pasig_resident" class="w-full p-2 border rounded" placeholder="Enter Residency" />
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Address*</label>
+                            <label class="block mb-2 font-bold">Address*</label>
                             <input type="text" name="address" class="w-full p-2 border rounded" placeholder="House Number/Unit/Building, Street, Subdivision/Village" required>
                         </div>
                         <div id="typeContainer">
-                        <label class="block mb-1 font-poppins font-bold">Type of School*</label>
+                        <label class="block mb-1 font-bold">Type of School*</label>
                         <select id="typeSelect" name="type" class="select p-2 border rounded w-full" onchange="handleTypeChange()">
                             <option disabled selected>Select Type of School</option>
                             <option value="public">Public</option>
@@ -129,9 +140,9 @@
                         </select>
                         </div>
                         <div id="publicSchoolContainer" class="hidden mt-1">
-                            <label class="block mb-2 font-poppins font-bold">Last School Attended*</label>
+                            <label class="block mb-2 font-bold">Last School Attended*</label>
                             <select id="publicSchoolSelect" name="public_school" class="select p-2 border rounded w-full" onchange="handlePublicSchoolChange()">
-                                <option select disabled value="">Select Last School Attended</option>
+                                <option disabled selected="">Select Last School Attended</option>
                                 <option value="Buting Senior High School">Buting Senior High School</option>
                                 <option value="Eusebio High School">Eusebio High School</option>
                                 <option value="Kapitolyo High School">Kapitolyo High School</option>
@@ -146,23 +157,23 @@
                             </select>
                         </div>
                         <div id="otherPublicSchoolContainer" class="hidden mt-1">
-                            <label class="block mb-2 font-poppins font-bold">Other: Please Specify*</label>
+                            <label class="block mb-2 font-bold">Other: Please Specify*</label>
                             <input type="text" id="otherPublicSchoolInput" name="other_public_school" class="w-full p-2 border rounded" placeholder="Enter School Name" />
                         </div>
                         <div id="privateSchoolContainer" class="hidden mt-1">
-                            <label class="block mb-2 font-poppins font-bold">Enter Private School Name*</label>
+                            <label class="block mb-2 font-bold">Enter Private School Name*</label>
                             <input type="text" id="privateSchoolInput" name="private_school" class="w-full p-2 border rounded" placeholder="Enter Private School Name" />
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Email*</label>
+                            <label class="block mb-2 font-bold">Email*</label>
                             <input type="email" name="email" class="w-full p-2 border rounded" placeholder="@gmail.com" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Talents*</label>
+                            <label class="block mb-2 font-bold">Talents*</label>
                             <input type="text" name="talents" class="w-full p-2 border rounded" placeholder="Singing, Dancing" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Strand and Program*</label>
+                            <label class="block mb-2 font-bold">Strand and Program*</label>
                             <select id="strandProgram" name="strand" class="select p-2 border rounded w-full">
                                 <option disabled selected>Select Strand</option>
                                 <option value="ABM">ABM(Accountancy, Business and Management)</option>
@@ -175,7 +186,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Monthly Salary(Combined)*</label>
+                            <label class="block mb-2 font-bold">Parents Monthly Salary(Combined)*</label>
                             <select id="strandProgram" name="strand" class="select p-2 border rounded w-full">
                                 <option disabled selected>Select Salary</option>
                                 <option value="Low-income">Below 12,000</option>
@@ -192,9 +203,9 @@
             <!-- Parent/Guardian Details Section -->
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg font-poppins">Parent/Guardian Details</h2>
-                <div class="bg-gray-100 p-4 rounded-b-lg">
+                <div class="bg-gray-100 p-4 rounded-b-lg font-poppins">
                     <div class="mb-4">
-                        <label class="block mb-2 font-poppins font-bold">Choose Parent or Guardian*</label>
+                        <label class="block mb-2 font-bold">Choose Parent or Guardian*</label>
                         <div>
                             <input type="radio" id="parentOption" name="relation" value="parent" onchange="handleRelationChange()">
                             <label for="parentOption" class="font-poppins">Parent</label>
@@ -205,37 +216,37 @@
             
             <!-- Guardian Details Section -->
             <div id="guardianDetailsContainer" class="hidden">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 font-poppins">
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Guardian Last Name*</label>
+                        <label class="block mb-2 font-bold">Guardian Last Name*</label>
                         <input type="text" name="guardian_last_name" class="w-full p-2 border rounded" placeholder="Last Name" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Guardian First Name*</label>
+                        <label class="block mb-2 font-bold">Guardian First Name*</label>
                         <input type="text" name="guardian_first_name" class="w-full p-2 border rounded" placeholder="First Name" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Guardian Middle Name*</label>
+                        <label class="block mb-2 font-bold">Guardian Middle Name*</label>
                         <input type="text" name="guardian_middle_name" class="w-full p-2 border rounded" placeholder="Middle Name" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Suffix</label>
+                        <label class="block mb-2 font-bold">Suffix</label>
                         <input type="text" name="guardian_suffix" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Age*</label>
+                        <label class="block mb-2 font-bold">Age*</label>
                         <input type="number" name="guardian_dob" class="w-full p-2 border rounded" placeholder="Age" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Phone Number*</label>
+                        <label class="block mb-2 font-bold">Phone Number*</label>
                         <input type="tel" name="guardian_phone_number" class="w-full p-2 border rounded" placeholder="+63" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Email*</label>
+                        <label class="block mb-2 font-bold">Email*</label>
                         <input type="email" name="guardian_email" class="w-full p-2 border rounded" placeholder="@gmail.com" required>
                     </div>
                     <div>
-                        <label class="block mb-2 font-poppins font-bold">Address*</label>
+                        <label class="block mb-2 font-bold">Address*</label>
                         <input type="text" name="guardian_address" class="w-full p-2 border rounded" placeholder="House Number/Unit/Building, Street, Subdivision/Village" required>
                     </div>
                 </div>
@@ -245,35 +256,35 @@
             <div id="parentDetailsContainer" class="hidden">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Parent Last Name*</label>
+                            <label class="block mb-2 font-bold">Parent Last Name*</label>
                             <input type="text" name="parent_last_name" class="w-full p-2 border rounded" placeholder="Last Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold"> Parent First Name*</label>
+                            <label class="block mb-2 font-bold"> Parent First Name*</label>
                             <input type="text" name="parent_first_name" class="w-full p-2 border rounded" placeholder="First Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Parent Middle Name*</label>
+                            <label class="block mb-2 font-bold">Parent Middle Name*</label>
                             <input type="text" name="parent_middle_name" class="w-full p-2 border rounded" placeholder="Middle Name" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Suffix</label>
+                            <label class="block mb-2 font-bold">Suffix</label>
                             <input type="text" name="parent_suffix" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Age*</label>
+                            <label class="block mb-2 font-bold">Age*</label>
                             <input type="number" name="parent_dob" class="w-full p-2 border rounded" placeholder="Age" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Phone Number*</label>
+                            <label class="block mb-2 font-bold">Phone Number*</label>
                             <input type="tel" name="parent_phone_number" class="w-full p-2 border rounded" placeholder="+63" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Email*</label>
+                            <label class="block mb-2 font-bold">Email*</label>
                             <input type="email" name="parent_email" class="w-full p-2 border rounded" placeholder="Email" required>
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Address*</label>
+                            <label class="block mb-2 font-bold">Address*</label>
                             <input type="text" name="parent_address" class="w-full p-2 border rounded" placeholder="House Number/Unit/Building, Street, Subdivision/Village" required>
                         </div>
                     </div>
@@ -282,13 +293,13 @@
 
 
             <div class="text-right">
-                <button type="button" onclick="redirectNext()" class="bg-green-600 text-white px-4 py-2 rounded font-poppins mt-5">Next</button>
+                <button type="submit" formaction="{{ route('admissionform2') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins mt-5">Next</button>
             </div>
         </form>
     </div>
 
     <script>
-        function redirectNext() {
+        function submitForm() {
             window.location.href = "{{ url('admissionform2') }}";
         }
 

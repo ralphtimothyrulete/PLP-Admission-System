@@ -2,7 +2,7 @@
     <x-slot:heading>
         Admission
     </x-slot:heading>
-    <p class="mb-4">Complete your application with academic records and course choices.</p>
+    <p class="mb-4 font-poppins">Complete your application with academic records and course choices.</p>
 
     <!-- Step 2 of 2: Academic Records and Course Choices -->
     <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
@@ -11,24 +11,24 @@
             <!-- Student Details Section -->
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-green-600 mb-1 font-poppins">STUDENT APPLICATION</h1>
-                <div class="text-right text-green-600 mb-1 font-bold">2 of 2</div>
-                <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg">Student Record - General Weighted Average</h2>
+                <div class="text-right text-green-600 mb-1 font-bold font-poppins">2 of 2</div>
+                <h2 class="text-xl font-semibold font-poppins text-white bg-green-600 p-2 rounded-t-lg">Student Record - General Weighted Average</h2>
                 <div class="bg-gray-100 p-4 rounded-b-lg">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 font-bold">Science*</label>
+                            <label class="block mb-2 font-poppins font-bold">Science*</label>
                             <input type="number" name="science" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                         <div>
-                            <label class="block mb-2 font-bold">Mathematics*</label>
+                            <label class="block mb-2 font-poppins font-bold">Mathematics*</label>
                             <input type="number" name="mathematics" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                         <div>
-                            <label class="block mb-2 font-bold">English*</label>
+                            <label class="block mb-2 font-poppins font-bold">English*</label>
                             <input type="number" name="english" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                         <div>
-                            <label class="block mb-2 font-bold">Overall Grade*</label>
+                            <label class="block mb-2 font-poppins font-bold">Overall Grade*</label>
                             <input type="number" name="overall_grade" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                     </div>
@@ -37,12 +37,12 @@
 
             <!-- Course Choices Section -->
             <div class="mb-6">
-            <p class="mb-4">
-                <strong class="font-bold">NOTE:</strong> Before proceeding, please refer to this link to know what courses to apply where your strand is applicable 
+            <p class="mb-4 font-poppins">
+                <strong class="font-bold font-poppins">NOTE:</strong> Before proceeding, please refer to this link to know what courses to apply where your strand is applicable 
                 <a href="{{ route('req-strand') }}" class="text-blue-500 underline">PLP- Strand Requirements</a>
             </p>
             </div>
-                <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg">Course Choices</h2>
+                <h2 class="text-xl font-semibold font-poppins text-white bg-green-600 p-2 rounded-t-lg">Course Choices</h2>
                 <div class="bg-gray-100 p-4 rounded-b-lg">
                     <div class="grid grid-cols-2 gap-4">
                             <div id="strandContainer1">
@@ -88,7 +88,7 @@
                             <div id="strandContainer3">
                             <label class="block mb-2 font-poppins font-bold">Third Choice*</label>
                                 <select id="strandSelect3" name="third_choice" class="select p-2 border rounded w-full" required>
-                                    <option disabled selected="">Select Second Choice</option>
+                                    <option disabled selected="">Select Third Choice</option>
                                     <option value="Bachelor in Elementary Education">Bachelor in Elementary Education (BEED)</option>
                                     <option value="Bachelor in Secondary Education Major in English">Bachelor in Secondary Education Major in English (BSED-ENG)</option>
                                     <option value="Bachelor in Secondary Education Major in Filipino">Bachelor in Secondary Education Major in Filipino (BSED-FIL)</option>
@@ -106,11 +106,10 @@
                                 </select>
                             </div>    
                     </div>
+                    <div class="text-right">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins">Submit</button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="text-right">
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Submit</button>
             </div>
         </form>
     </div>

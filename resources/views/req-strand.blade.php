@@ -2,26 +2,26 @@
 <body class="bg-gray-50 font-poppins">
 
     <div class="text-left mt-1">
-            <a href="javascript:history.back()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Back</a>
+            <a href="javascript:history.back()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded font-poppins">Back</a>
         </div>
     </div>
 
     <div class="text-center mb-8">
-            <h1 class="text-green-600 font-bold text-2xl">APPLICATION FOR ADMISSION</h1>
-            <p class="text-black font-semibold ">ACADEMIC YEAR 2024 - 2025</p>
+            <h1 class="text-green-600 font-bold text-2xl font-poppins">APPLICATION FOR ADMISSION</h1>
+            <p class="text-black font-semibold font-poppins">ACADEMIC YEAR 2024 - 2025</p>
         </div>
 
     <div class="max-w-4xl mx-auto p-6">
 
-        <h2 class="text-green-600 font-bold text-xl mb-4">REQUIRED STRAND PER PROGRAM</h2>
+        <h2 class="text-green-600 font-bold text-xl mb-4 font-poppins">REQUIRED STRAND PER PROGRAM</h2>
 
         <!-- Table -->
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-200">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700">
-                        <th class="text-green-600 text-center py-3 px-6 font-bold text-l border-r">PROGRAM</th>
-                        <th class="text-green-600 text-center py-3 px-6 font-bold text-l">STRAND</th>
+                        <th class="text-green-600 text-center py-3 px-6 font-bold text-l border-r font-poppins">PROGRAM</th>
+                        <th class="text-green-600 text-center py-3 px-6 font-bold text-l font-poppins">STRAND</th>
                     </tr>
                 </thead>
                 <tbody class="text-black font-poppins">

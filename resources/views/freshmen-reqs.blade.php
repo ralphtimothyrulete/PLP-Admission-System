@@ -2,7 +2,7 @@
     <x-slot:heading>
         Requirements
     </x-slot:heading>
-    <h1 class="text-3xl font-bold text-green-600 mb-1">STUDENT FRESHMEN APPLICATION</h1>
+    <h1 class="text-3xl font-bold text-green-600 mb-1 font-poppins">STUDENT FRESHMEN APPLICATION</h1>
     <main class="container mx-auto px-6 py-8">
         <form method="POST" action="{{ route('freshmen.upload') }}" enctype="multipart/form-data" id="upload-form">
             @csrf
@@ -10,7 +10,7 @@
                 <!-- Required Documents Section -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg font-poppins">Required Documents</h2>
-                    <ul class="space-y-4 mt-4">
+                    <ul class="space-y-4 mt-4 font-poppins">
                         <li class="border border-green-500 rounded-lg p-4">Certified True Copy (CTC) of Grade 11</li>
                         <li class="border border-green-500 rounded-lg p-4">Form 138 (For ongoing Grade 12 Students)</li>
                         <li class="border border-green-500 rounded-lg p-4">Form 137 (For SHS Graduate)</li>
@@ -23,16 +23,18 @@
                 </div>
 
                 <!-- Media Upload Section -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Media Upload</h2>
-                    <div id="drop-area" class="border-dashed border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg font-poppins">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-2">Media Upload</h2>
+                    <p class="mb-4"> Add your documents here </p>
+                    <div id="drop-area" class="border-dashed border-2 border-green-600 rounded-lg p-4 mb-4 text-center">
                         <p class="text-gray-600">Drag your file(s) here or <label for="file-upload" class="text-green-600 cursor-pointer">browse</label></p>
                         <p class="text-sm text-gray-500">Max 10 MB files are allowed</p>
                         <input type="file" name="files[]" id="file-upload" class="hidden" multiple>
                     </div>
+                        <p class="mb-3 font-poppins text-gray-500">Only supports .jpg, .jpeg, .png and .pdf files</p>
 
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Uploaded Files</h3>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3 font-poppins">Uploaded Files</h3>
                         <ul class="space-y-2" id="file-list">
                             <!-- Uploaded files will be listed here -->
                         </ul>
@@ -41,7 +43,7 @@
             </div>
 
             <div class="text-right mt-6">
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg">Submit Files</button>
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg font-poppins">Submit Files</button>
             </div>
         </form>
     </main>

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\EmailController;
+use Illuminate\Support\Facades\Broadcast;
+use App\Http\Controllers\AdmissionFormController;
 
 //Navigation
 Route::get('/', function () {
@@ -67,3 +70,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 });
+
+//Emails
+Route::get('/send-entrance-exam-email', [EmailController::class, 'sendEntranceExamEmail']);
+Route::get('/send-entrance-exam-passed-email', [EmailController::class, 'sendEntranceExamPassedEmail']);
+Route::get('/send-enrollment-slot-offering-email', [EmailController::class, 'sendEnrollmentSlotOfferingEmail']);
+Route::get('/send-requirements-submission-email', [EmailController::class, 'sendRequirementsSubmissionEmail']);
+
+//Notifications
+Route::get('/send-deadline-notification/{student_id}', [EmailController::class, 'sendAdmissionDeadlineNotification']);
+Route::get('/admission-update', [AdmissionController::class, 'triggerAdmissionUpdate']);
