@@ -23,28 +23,28 @@
         @csrf
         <div class="mb-4 font-poppins">
           <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-          <input name="name" type="text" placeholder="Enter Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <input name="name" type="text" placeholder="Enter Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
           @error('name')
             <span class="text-red-600">{{ $message }}</span>
           @enderror
         </div>
         <div class="mb-4 font-poppins">
           <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-          <input name="email" type="email" placeholder="email@gmail.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <input name="email" type="email" placeholder="email@gmail.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
           @error('email')
             <span class="text-red-600">{{ $message }}</span>
           @enderror
         </div>
         <div class="mb-4 font-poppins">
           <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-          <input name="password" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <input name="password" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
           @error('password')
             <span class="text-red-600">{{ $message }}</span>
           @enderror
         </div>
         <div class="mb-4 font-poppins">
           <label for="confirm_password" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-          <input name="password_confirmation" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <input name="password_confirmation" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
           @error('password_confirmation')
             <span class="text-red-600">{{ $message }}</span>
           @enderror

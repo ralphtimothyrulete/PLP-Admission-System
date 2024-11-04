@@ -27,7 +27,7 @@
                     <div class="border-dashed border-2 border-green-600 rounded-lg p-4 mb-4 text-center">
                         <p class="text-gray-600">Drag your file(s) or <label for="file-upload" class="text-green-600 cursor-pointer">browse</label></p>
                         <p class="text-sm text-gray-500">Max 10 MB files are allowed</p>
-                        <input type="file" name="files[]" id="file-upload" class="hidden" multiple>
+                        <input type="file" name="transferee_files" id="file-upload" class="hidden" multiple>
                     </div>
                         <p class="mb-3 font-poppins text-gray-500">Only supports .jpg, .jpeg, .png and .pdf files</p>
 
@@ -77,7 +77,7 @@
 
         document.getElementById('upload-form').addEventListener('submit', function (e) {
             const formData = new FormData();
-            files.forEach(file => formData.append('files[]', file));
+            files.forEach(file => formData.append('transferee_files', file));
 
             e.preventDefault(); // Stop the default form submission
 

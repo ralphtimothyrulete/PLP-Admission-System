@@ -9,17 +9,6 @@
      <!-- Student Application Form -->
         <form id="studentForm" action="{{ route('admissionform2') }}" method="POST">
             @csrf
-
-            @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong class="font-bold">Please fix the following errors:</strong>
-            <ul class="mt-2 list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-         @endif
             <!-- Student Details Section -->
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-white bg-green-600 p-2 rounded-t-lg font-poppins">Student Details</h2>
@@ -43,7 +32,7 @@
                         </div>
                         <div>
                             <label class="block mb-2 font-bold">Age*</label>
-                            <input type="number" name="" class="w-full p-2 border rounded" placeholder="18" required>
+                            <input type="number" name="age" class="w-full p-2 border rounded" placeholder="18" required>
                         </div>
                         <div>
                             <label class="block mb-2 font-bold">Sex(Kasarian)*</label>
@@ -133,7 +122,7 @@
                         </div>
                         <div id="typeContainer">
                         <label class="block mb-1 font-bold">Type of School*</label>
-                        <select id="typeSelect" name="type" class="select p-2 border rounded w-full" onchange="handleTypeChange()">
+                        <select id="typeSelect" name="school_type" class="select p-2 border rounded w-full" onchange="handleTypeChange()">
                             <option disabled selected>Select Type of School</option>
                             <option value="public">Public</option>
                             <option value="private">Private</option>
@@ -158,7 +147,7 @@
                         </div>
                         <div id="otherPublicSchoolContainer" class="hidden mt-1">
                             <label class="block mb-2 font-bold">Other: Please Specify*</label>
-                            <input type="text" id="otherPublicSchoolInput" name="other_public_school" class="w-full p-2 border rounded" placeholder="Enter School Name" />
+                            <input type="text" id="otherPublicSchoolInput" name="other_school" class="w-full p-2 border rounded" placeholder="Enter School Name" />
                         </div>
                         <div id="privateSchoolContainer" class="hidden mt-1">
                             <label class="block mb-2 font-bold">Enter Private School Name*</label>
@@ -187,7 +176,7 @@
                         </div>
                         <div>
                             <label class="block mb-2 font-bold">Parents Monthly Salary(Combined)*</label>
-                            <select id="strandProgram" name="strand" class="select p-2 border rounded w-full">
+                            <select id="monthlySalary" name="salary" class="select p-2 border rounded w-full">
                                 <option disabled selected>Select Salary</option>
                                 <option value="Low-income">Below 12,000</option>
                                 <option value="Lower-middle-income">PHP 12,000 - PHP 25,000</option>
@@ -207,9 +196,9 @@
                     <div class="mb-4">
                         <label class="block mb-2 font-bold">Choose Parent or Guardian*</label>
                         <div>
-                            <input type="radio" id="parentOption" name="relation" value="parent" onchange="handleRelationChange()">
+                            <input type="radio" id="parentOption" name="parent_option" value="parent" onchange="handleRelationChange()">
                             <label for="parentOption" class="font-poppins">Parent</label>
-                            <input type="radio" id="guardianOption" name="relation" value="guardian" class="ml-4" onchange="handleRelationChange()">
+                            <input type="radio" id="guardianOption" name="guardian_option" value="guardian" class="ml-4" onchange="handleRelationChange()">
                             <label for="guardianOption" class="font-poppins">Guardian</label>
                         </div>
                     </div>
@@ -293,7 +282,7 @@
 
 
             <div class="text-right">
-                <button type="submit" formaction="{{ route('admissionform2') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins mt-5">Next</button>
+                <button type="submit" a href="{{ route('admissionform2') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins mt-5">Next</button>
             </div>
         </form>
     </div>
