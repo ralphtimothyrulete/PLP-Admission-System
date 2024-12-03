@@ -18,13 +18,13 @@ class EmailController extends Controller
     public function sendEntranceExamEmail()
     {
         $applicantName = "Applicant"; // Replace with actual name
-        $attachmentPath = storage_path('app/public/exam_permit.pdf'); // Path to the attachment file
+        $attachmentPath = storage_path('public/storage/exam_permit.pdf'); // Path to the attachment file
         $examDate = "March 5, 2024"; // Replace with the actual date
         $examTime = "8:00 AM";
 
         try {
             Mail::to('primaryrecipient@example.com') // Primary recipient
-                ->bcc(['ralphrulete21@gmail.com', 'ralphrulete12@gmail.com', 'ralphrulete8110@gmail.com']) // BCC recipients
+                ->bcc(['ralphrulete21@gmail.com', 'ralphrulete12@gmail.com', 'ralphtimothyrulete@gmail.com']) // BCC recipients
                 ->send(new EntranceExamEmail($applicantName, $attachmentPath, $examDate, $examTime));
             
             Log::info('Entrance Exam Email sent successfully to ralph8110@gmail.com.');

@@ -4,6 +4,12 @@
     </x-slot:heading>
 <hr />
 <form method="POST" enctype="multipart/form-data" action="">
+<div>
+        <label class="label">
+            <span class="text-base label-text font-bold font-poppins">ID</span>
+        </label>
+        <input name="name" type="text" value="{{ auth()->user()->id }}" class="w-full input input-bordered font-poppins" />
+    </div>
     <div>
         <label class="label">
             <span class="text-base label-text font-bold font-poppins">Name</span>

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <title>Login Page</title>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
@@ -18,7 +19,10 @@
             <img src="/storage/logo.png" alt="Logo" class="w-24 mx-auto mb-4">
         </div>
         <h1 class="text-3xl font-poppins text-center text-gray-800">Login</h1>
-        <form action="{{ route('login.action') }}" method="POST" class="space-y-4">
+
+       
+
+        <form action="{{ route('login.action') }}" method="POST" class="space-y-4" x-data="formSubmit" @submit.prevent="submit">
                 @csrf
                 @if ($errors->any())
                 <div role="alert" class="alert alert-warning">
@@ -41,7 +45,7 @@
                 <input type="password" id="password" name="password" placeholder="Enter Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div class="mb-4 font-poppins">
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign In</button>
+                <button id="signInButton" type="submit" x-ref="btn" class="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign In</button>
             </div>
             <div class="flex items-center justify-between">
                 <div class="flex items-start">
@@ -52,7 +56,7 @@
                             <label for="remember" class="text-gray-700 font-poppins">Remember me</label>
                         </div>
                 </div>
-                    <a href="/forgot" class=" font-bold text-green-600 hover:text-green-800 font-poppins">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class=" font-bold text-green-600 hover:underline green-800 font-poppins">Forgot password?</a>
             </div>
             <div class="flex items-center w-full my-4 font-poppins">
                 <hr class="w-full" />
@@ -62,9 +66,33 @@
             <div class="text-center font-poppins">
                 <span></span>
                 <span>Don't have an account?</span>
-                <a href="{{ route('register') }}" class="text-green-600 hover:text-green-800 font-bold">Register</a>
+                <a href="{{ route('register') }}" class="text-green-600 font-bold hover:underline green-800">Register</a>
             </div>
         </form>
     </div>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('formSubmit', () => ({
+            submit() {
+                // Disable button to prevent multiple submissions
+                this.$refs.btn.disabled = true;
+                this.$refs.btn.classList.remove('bg-green-600', 'hover:bg-green-800');
+                this.$refs.btn.classList.add('bg-green-400');
+
+                // Use a template literal for the spinner and text
+                this.$refs.btn.innerHTML = `
+                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                    Please wait...
+                `;
+
+                // Submit the form
+                this.$el.submit();
+            }
+        }));
+    });
+    </script>
+
+    
 </body>
 </html>

@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css', 
                 'resources/js/app.js',   
+                'node_modules/toastr/build/toastr.min.css',
+                'node_modules/toastr/build/toastr.min.js',
             ],
             refresh: true,
         }),

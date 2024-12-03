@@ -28,7 +28,7 @@ class EntranceExamEmail extends Mailable
     {
         return $this->view('emails.entrance_exam')
                     ->subject('Entrance Exam Schedule')
-                    ->bcc(['ralphrulete21@gmail.com', 'ralphrulete12@gmail.com', 'ralphrulete8110@gmail.com'])
+                    ->bcc(['ralphrulete21@gmail.com', 'ralphrulete12@gmail.com', 'ralphtimothyrulete@gmail.com'])
                     ->attach($this->attachmentPath)
                     ->with([
                         'applicantName' => $this->applicantName,
