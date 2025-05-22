@@ -11,7 +11,13 @@ class Image extends Model
 
     protected $fillable = [
         'name', 
-        'path',
         'student_id',
+        'path',
+        'source',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

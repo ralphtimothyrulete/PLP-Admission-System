@@ -11,12 +11,12 @@
             <p class="text-black font-semibold font-poppins">ACADEMIC YEAR 2024 - 2025</p>
         </div>
 
-    <div class="max-w-4xl mx-auto p-6">
+    <div class="max-w-4xl mx-auto p-6 animate-fade-in">
 
         <h2 class="text-green-600 font-bold text-xl mb-4 font-poppins">REQUIRED STRAND PER PROGRAM</h2>
 
         <!-- Table -->
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto animate-slide-in">
             <table class="min-w-full bg-white border border-gray-200">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700">

@@ -14,6 +14,10 @@
                 <h3 class="text-xl font-semibold mt-2 text-white bg-green-600 p-2 rounded-t-lg font-poppins">Student Details</h3>
                 <div class="bg-gray-100 p-4 rounded-b-lg">
                     <div class="mb-4">
+                        <label class="block text-gray-700 font-bold">User ID:</label>
+                        <div class="text-gray-900">{{ $application->student->user_id }}</div>
+                    </div>
+                    <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Name:</label>
                         <div class="text-gray-900">{{ $application->student->last_name }}, {{ $application->student->first_name }} {{ $application->student->middle_name }} {{ $application->student->suffix }}</div>
                     </div>

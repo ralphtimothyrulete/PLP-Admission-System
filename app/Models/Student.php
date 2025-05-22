@@ -10,15 +10,36 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'last_name', 'first_name', 'middle_name', 'suffix', 'age', 'sex', 
-        'contact_number', 'religion', 'sports', 'residency_status', 
-        'district', 'barangay', 'non_pasig_resident', 'address', 'email', 
-        'talents', 'strand', 'salary'
+        'user_id', 
+        'last_name', 
+        'first_name', 
+        'middle_name', 
+        'suffix', 
+        'age', 
+        'sex', 
+        'contact_number', 
+        'religion', 
+        'sports', 
+        'residency_status', 
+        'district', 
+        'barangay', 
+        'non_pasig_resident', 
+        'address', 
+        'email', 
+        'talents', 
+        'strand', 
+        'salary',
+        'step',
     ];
 
     public function parentsGuardians()
     {
         return $this->hasMany(ParentGuardian::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
     }
 
     public function schools()

@@ -3,7 +3,7 @@
 @section('body')
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
     <div class="container px-6 py-8 mx-auto">
-        <h3 class="text-3xl font-bold text-black">Analytics</h3>
+        <h3 class="text-3xl font-bold text-black">Analytics ({{ session('year', date('Y')) }})</h3>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-white p-4 rounded-lg shadow-md  ">

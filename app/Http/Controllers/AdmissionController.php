@@ -9,28 +9,65 @@ use App\Models\Course;
 use App\Models\ParentGuardian;
 use App\Models\School;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Events\ApplicationCreated;
+use App\Models\User;
+use App\Events\AdmissionUpdateEvent;
+
 
 class AdmissionController extends Controller
 {
     public function index(Request $request)
     {
         $courses = Course::all();
-        return view('admission', compact('courses'));
+        $student_id = $request->session()->get('student_id');
+        $student = Student::find($student_id);
+        return view('admission', compact('courses', 'student_id', 'student'));
     }
     
     public function store(Request $request)
     {
         try {
-            $student = Student::create($request->only([
-                'last_name', 'first_name', 'middle_name', 'suffix', 'age', 'sex', 
-                'contact_number', 'religion', 'sports', 'residency_status', 
-                'district', 'barangay', 'non_pasig_resident', 'address', 'email', 
-                'talents', 'strand', 'salary'
-            ]));
-        
-            $student->schools()->create($request->only([
-                'school_type', 'public_school', 'other_school', 'private_school'
-            ]));
+            
+             // Get the authenticated user
+            $user = Auth::user();
+
+            // Validate student data
+            $validatedStudentData = $request->validate([
+                'last_name' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'middle_name' => 'nullable|string|max:255',
+                'suffix' => 'nullable|string|max:255',
+                'age' => 'required|integer|min:0|max:99',
+                'sex' => 'required|string|max:10',
+                'contact_number' => 'required|string|max:255',
+                'religion' => 'required|string|max:255',
+                'sports' => 'nullable|string|max:255',
+                'residency_status' => 'required|string|max:255',
+                'district' => 'nullable|string|max:255',
+                'barangay' => 'nullable|string|max:255',
+                'non_pasig_resident' => 'nullable|string|max:255',
+                'address' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'talents' => 'nullable|string|max:255',
+                'strand' => 'required|string|max:255',
+                'salary' => 'required|string|max:255',
+            ]);
+
+            // Add user_id to the validated data
+            $validatedStudentData['user_id'] = $user->id;
+
+            // Create student
+            $student = Student::create($validatedStudentData);
+
+            // Validate and create school data
+            $validatedSchoolData = $request->validate([
+                'school_type' => 'required|string|max:255',
+                'public_school' => 'nullable|string|max:255',
+                'other_school' => 'nullable|string|max:255',
+                'private_school' => 'nullable|string|max:255',
+            ]);
+            $student->schools()->create($validatedSchoolData);
 
             $parentGuardianData = $request->input('parent_guardian');
             if ($parentGuardianData) {
@@ -83,6 +120,10 @@ class AdmissionController extends Controller
                     ]);
                 }
             }
+
+            // Update step to 2
+            $student->update(['step' => 2]);
+
             // Store student_id in the session
             $request->session()->put('student_id', $student->id);
 
@@ -99,8 +140,9 @@ class AdmissionController extends Controller
         if (!$student_id) {
             return redirect()->route('admission.index')->withErrors(['error' => 'Student ID not found in session.']);
         }
+        $student = Student::find($student_id);
         $courses = Course::all();
-        return view('admissionform2', compact('student_id', 'courses'));
+        return view('admissionform2', compact('student_id', 'courses', 'student'));
     }
 
     public function submitApplication(Request $request)
@@ -130,27 +172,41 @@ class AdmissionController extends Controller
         // Create and store the application
         $application = Application::create($validatedData);
 
+        // Update step to 3
+        $student = Student::find($student_id);
+        $student->update(['step' => 3]);
+
         Log::info('Application Created:', ['application' => $application]);
 
         return redirect()->route('admission.index')->with('status', 'Application submitted successfully! Please wait for your Email if you will proceed.');
+    }
+
+    public function triggerAdmissionUpdate(Request $request)
+    {
+        $message = $request->input('message');
+        event(new AdmissionUpdateEvent($message));
+        
+        return response()->json(['status' => 'Admission update event triggered successfully']);
     }
     
     // RUD operations for Application Forms
 
     public function applicationFormsIndex(Request $request)
     {
+        $year = session('year', date('Y'));
         $search = $request->input('search');
+
         $applications = Application::with('student')
+            ->whereYear('created_at', $year)
             ->when($search, function ($query, $search) {
-                return $query->whereHas('student', function ($query) use ($search) {
-                    $query->where('first_name', 'like', "%{$search}%")
-                        ->orWhere('last_name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
+                return $query->whereHas('student', function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%");
                 });
             })
-        ->paginate(15); // Adjust number of items per page if needed
+            ->paginate(15);
 
-    return view('application-forms.index', compact('applications', 'search'));
+        return view('application-forms.index', compact('applications', 'search'));
     }
 
     public function applicationFormsShow($id)

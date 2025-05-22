@@ -13,8 +13,8 @@
   <title>Sign Up Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="w-full p-8 max-w-md bg-white rounded-lg shadow-md ">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full p-8 max-w-md bg-white rounded-lg shadow-md animate-fade-in mx-4">
       <div class="mb-4 text-center">
         <img src="{{ URL('storage/logo.png') }}" alt="Logo" class="w-24 mx-auto mb-4">
       </div>
@@ -50,14 +50,24 @@
         </div>
         <div class="mb-4 font-poppins">
           <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-          <input name="password" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          <div class="relative">
+            <input name="password" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePasswordVisibility('password')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
           @error('password')
             <span class="text-red-600">{{ $message }}</span>
           @enderror
         </div>
         <div class="mb-4 font-poppins">
           <label for="confirm_password" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-          <input name="password_confirmation" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          <div class="relative">
+            <input name="password_confirmation" type="password" placeholder="******" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePasswordVisibility('password_confirmation')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
           @error('password_confirmation')
             <span class="text-red-600">{{ $message }}</span>
           @enderror
@@ -101,6 +111,20 @@
             }
         }));
     });
-    </script>
+
+    function togglePasswordVisibility(id) {
+      const input = document.querySelector(`input[name="${id}"]`);
+      const icon = input.nextElementSibling.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
 </body>
 </html>

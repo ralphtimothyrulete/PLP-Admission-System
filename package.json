@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "chart.js": "^4.4.6",
-        "laravel-echo": "^1.16.1",
+        "laravel-echo": "^1.17.1",
         "pusher-js": "^8.4.0-rc2",
         "toastr": "^2.1.4"
     }

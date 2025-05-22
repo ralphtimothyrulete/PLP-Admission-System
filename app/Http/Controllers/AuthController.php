@@ -49,24 +49,22 @@ class AuthController extends Controller
         }
     }
 
-        //Email Verification Notice
-        public function verifyNotice (){
-            return view('auth.verify-email');
-        }
+    public function verifyNotice()
+    {
+        return view('auth.verify-email');
+    }
 
-        //Email Verification Handler
-        public function verifyEmail(EmailVerificationRequest $request) {
-            $request->fulfill();
-         
-            return redirect()->route('login');
-        }
+    public function verifyEmail(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+        return redirect()->route('login');
+    }
 
-        //Resending the Verification Email Handler
-        public function verifyHandler(Request $request) {
-            $request->user()->sendEmailVerificationNotification();
-        
-            return back()->with('message', 'Verification link sent!');
-        }
+    public function verifyHandler(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
+    }
 
     public function login()
     {
@@ -90,7 +88,6 @@ class AuthController extends Controller
 
         session()->flash('status', 'Welcome! You are now logged in.');
         
-
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
@@ -101,9 +98,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
- 
         $request->session()->invalidate();
- 
         return redirect('/login');
     }
 
@@ -111,5 +106,43 @@ class AuthController extends Controller
     {
         return view('profile');
     }
-}
 
+    public function showChangePasswordForm()
+    {
+        return view('auth.change-password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('profile-settings')->with('status', 'Password changed successfully.');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('profile-settings')->with('status', 'Profile updated successfully.');
+    }
+}

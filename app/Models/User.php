@@ -43,7 +43,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-        ];
+        ];    
     }
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 }

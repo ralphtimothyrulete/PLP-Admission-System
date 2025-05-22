@@ -20,6 +20,7 @@ class AdmissionUpdateEvent implements ShouldBroadcast
     public function __construct($message)
     {
         $this->message = $message;
+        $this->sendAdmissionUpdate();
     }
 
     public function broadcastOn()
@@ -34,7 +35,6 @@ class AdmissionUpdateEvent implements ShouldBroadcast
 
     public function sendAdmissionUpdate()
     {
-        // Logic to send notifications to users
         $users = User::all();
         foreach ($users as $user) {
             $user->notify(new AdmissionUpdateNotification($this->message));

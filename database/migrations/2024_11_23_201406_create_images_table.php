@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->string('source')->nullable(); // 'freshmen' or 'transferee'
             $table->string('name');
             $table->string('path');
             $table->timestamps();

@@ -2,7 +2,6 @@
     <x-slot:heading>
         Admission
     </x-slot:heading>
-    <p class="mb-4 font-poppins">Complete your application with academic records and course choices.</p>
     @if($errors->any())
         <div class="alert alert-danger bg-red-600 font-semibold" style="margin: 1%">
             <ul>
@@ -12,8 +11,10 @@
             </ul>
         </div>
     @endif
+    <x-progress-bar :step="$student->step" />
+    <p class="mb-4 mt-4 font-poppins font-bold">Complete your application with academic records and course choices.</p>
     <!-- Step 2 of 2: Academic Records and Course Choices -->
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-6 animate-slide-in">
         <form id="application-form" action="{{ route('submit-application') }}" method="POST" onsubmit="return handleFormSubmit(event)">
             @csrf
             <input type="hidden" name="student_id" value="{{ $student_id }}">
@@ -23,21 +24,27 @@
                 <div class="text-right text-green-600 mb-1 font-bold font-poppins">2 of 2</div>
                 <h2 class="text-xl font-semibold font-poppins text-white bg-green-600 p-2 rounded-t-lg">Student Record - General Weighted Average</h2>
                 <div class="bg-gray-100 p-4 rounded-b-lg">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Science*</label>
+                            <label class="block mb-2 font-poppins font-bold">Science<span class="text-red-500">*</span></label>
                             <input type="number" name="science_grade" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">Mathematics*</label>
+                            <label class="block mb-2 font-poppins font-bold">Mathematics<span class="text-red-500">*</span></label>
                             <input type="number" name="mathematics_grade" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                         <div>
-                            <label class="block mb-2 font-poppins font-bold">English*</label>
+                            <label class="block mb-2 font-poppins font-bold">English<span class="text-red-500">*</span></label>
                             <input type="number" name="english_grade" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
-                        <div>
-                            <label class="block mb-2 font-poppins font-bold">Overall Grade*</label>
+                        <div class="relative">
+                            <label class="block mb-2 font-poppins font-bold">Overall Grade<span class="text-red-500">*</span>
+                                <span class="tooltip ml-2 text-blue-500 cursor-pointer">?
+                                    <span class="tooltiptext bg-gray-200 text-black p-2 rounded shadow-lg">
+                                        To compute the GWA/Overall Grade, sum all your grades and divide by the number of subjects.
+                                    </span>
+                                </span>
+                            </label>
                             <input type="number" name="overall_grade" class="w-full p-2 border rounded" placeholder="Grade" required min="0" max="99">
                         </div>
                     </div>
@@ -48,14 +55,14 @@
             <div class="mb-6">
             <p class="mb-4 font-poppins">
                 <strong class="font-bold font-poppins">NOTE:</strong> Before proceeding, please refer to this link to know what courses to apply where your strand is applicable 
-                <a href="{{ route('req-strand') }}" class="text-blue-500 underline">PLP- Strand Requirements</a>
+                <a href="{{ route('req-strand') }}" class="text-blue-500 underline">PLP - Strand Requirements</a>
             </p>
             </div>
                 <h2 class="text-xl font-semibold font-poppins text-white bg-green-600 p-2 rounded-t-lg">Course Choices</h2>
                 <div class="bg-gray-100 p-4 rounded-b-lg">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div id="strandContainer1">
-                            <label class="block mb-2 font-poppins font-bold">First Choice*</label>
+                            <label class="block mb-2 font-poppins font-bold">First Choice<span class="text-red-500">*</span></label>
                                 <select id="strandSelect1" name="first_choice" class="select p-2 border rounded w-full @error('first_choice') border-red-500 @enderror" required>
                                     <option disabled selected="">Select First Choice</option>
                                     <option value="Bachelor in Elementary Education">Bachelor in Elementary Education (BEED)</option>
@@ -81,7 +88,7 @@
                         </div>
     
                             <div id="strandContainer2">
-                            <label class="block mb-2 font-poppins font-bold">Second Choice*</label>
+                            <label class="block mb-2 font-poppins font-bold">Second Choice<span class="text-red-500">*</span></label>
                                 <select id="strandSelect2" name="second_choice" class="select p-2 border rounded w-full @error('second_choice') border-red-500 @enderror" required>
                                     <option disabled selected="">Select Second Choice</option>
                                     <option value="Bachelor in Elementary Education">Bachelor in Elementary Education (BEED)</option>
@@ -107,7 +114,7 @@
                             </div>
                         
                             <div id="strandContainer3">
-                            <label class="block mb-2 font-poppins font-bold">Third Choice*</label>
+                            <label class="block mb-2 font-poppins font-bold">Third Choice</label>
                                 <select id="strandSelect3" name="third_choice" class="select p-2 border rounded w-full @error('third_choice') border-red-500 @enderror" required>
                                     <option disabled selected="">Select Third Choice</option>
                                     <option value="Bachelor in Elementary Education">Bachelor in Elementary Education (BEED)</option>
@@ -134,7 +141,7 @@
                             </div>    
                         </div>
                     <div class="text-right">
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins">Submit</button>
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white mt-4 px-4 py-2 rounded font-poppins w-full sm:w-auto">Submit</button>
                     </div>
                 </div>
             </div>
@@ -160,7 +167,55 @@ function handleFormSubmit(event) {
     }
 
     return true; // Allow form submission
+
+    document.querySelectorAll('input, select').forEach(element => {
+    element.addEventListener('focus', () => {
+        element.classList.add('focused');
+    });
+
+    element.addEventListener('blur', () => {
+        element.classList.remove('focused');
+    });
+});
 }
 </script>
+
+<style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: #f9f9f9;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; 
+    left: 50%;
+    margin-left: -110px; 
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #f9f9f9 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 
 </x-layout>

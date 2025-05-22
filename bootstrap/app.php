@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CheckAdmissionPeriod;
 use App\Console\Commands\CreateAdminUser;
+use App\Console\Commands\DeleteUserAccounts;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,8 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Register the RoleMiddleware class
-        $middleware->alias(['role' => RoleMiddleware::class]);
+         // Register the RoleMiddleware class
+        $middleware->alias([
+            'role' => RoleMiddleware::class,
+            'check.admission.period' => CheckAdmissionPeriod::class,
+        ]);
 
         // Define a custom middleware within the closure for session-based authentication
         return function (Request $request, $next) {
@@ -30,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withCommands([
         CreateAdminUser::class,
+        DeleteUserAccounts::class, // Register the DeleteUserAccounts command
     ])
     ->withExceptions(function (Exceptions $exceptions) {
         //

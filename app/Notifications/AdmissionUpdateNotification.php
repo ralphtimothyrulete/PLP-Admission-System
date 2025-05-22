@@ -47,6 +47,7 @@ class AdmissionUpdateNotification extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->subject('Admission Update')
                     ->line($this->message)
+                    ->line('This is a reminder that the admission application is closing. Please make sure that you\'ve done all of it.')
                     ->action('View Details', url('/'))
                     ->line('Thank you for staying updated!');
     }

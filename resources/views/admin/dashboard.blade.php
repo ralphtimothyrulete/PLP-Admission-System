@@ -1,10 +1,9 @@
-
 @extends('components.master')
 
 @section('body')
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
     <div class="container px-6 py-8 mx-auto">
-        <h3 class="text-3xl font-bold text-black">Dashboard</h3>
+        <h3 class="text-3xl font-bold text-black">Dashboard ({{ session('year', date('Y')) }})</h3>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-white p-4 rounded-lg shadow-md">
@@ -21,11 +20,11 @@
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md md:col-span-2">
                 <h3 class="text-2xl font-bold text-gray-800">Admission</h3>
-                <canvas id="admissionTrendsChart" width="800" height="300"></canvas>
+                <canvas id="admissionTrendsChart" width="200" height="200"></canvas>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md md:col-span-2">
                 <h3 class="text-2xl font-bold text-gray-800">Grade Performance</h3>
-                <canvas id="gradePerformanceChart" width="800" height="300"></canvas>
+                <canvas id="gradePerformanceChart" width="500" height="300"></canvas>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md md:col-span-2">
                 <h3 class="text-2xl font-bold text-gray-800">Incomes</h3>
@@ -65,7 +64,9 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    fetch("{{ route('analytics.data') }}")
+    const year = "{{ session('year', date('Y')) }}"; // Get the selected year from the session
+
+    fetch(`{{ route('analytics.data') }}?year=${year}`) // Pass the year as a query parameter
         .then(response => response.json())
         .then(data => {
             // Gender Chart

@@ -11,11 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('images', function (Blueprint $table) {
-            if (!Schema::hasColumn('images', 'student_id')) {
-                $table->unsignedBigInteger('student_id')->nullable();
-            }
-        });
+        Schema::dropIfExists('images');
     }
 
     /**
@@ -23,8 +19,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('images', function (Blueprint $table) {
-            $table->dropColumn('student_id');
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('path');
+            $table->timestamps();
         });
     }
 };

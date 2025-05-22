@@ -7,6 +7,9 @@
         <meta name="referrer" content="always">
         <link rel="canonical" href="">
         <meta name="description" content="">
+        <!-- Include Pusher and Laravel Echo -->
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.1/echo.iife.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -15,12 +18,14 @@
         <title></title>
         @vite('resources/css/app.css')
         <link rel="stylesheet" href="{{ ('css/app.css') }}">
-        <script src="{{ ('js/main.js') }}"></script>
+        <script src="{{ ('js/bootstrap.js') }}"></script>
     </head>
     <body>
         <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-poppins">
-            @include('components.sidebar')
-            
+            <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
+                @include('components.sidebar')
+            </div>
+
             <div class="flex-1 flex flex-col overflow-hidden">
                 @include('components.header')
 

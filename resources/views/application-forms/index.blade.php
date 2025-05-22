@@ -29,7 +29,7 @@
                     @foreach($applications as $application)
                     <tr>
                         <td class="px-12 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div class="text-sm leading-5 font-medium text-gray-900">{{ $application->student->id }}</div>
+                            <div class="text-sm leading-5 font-bold text-gray-900">{{ $application->student->id }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="text-sm leading-5 font-medium text-gray-900">{{ $application->student->last_name }}, {{ $application->student->first_name }} {{ $application->student->suffix }}</div>
@@ -38,7 +38,7 @@
                             <div class="text-sm leading-5 text-gray-900">{{ $application->student->email }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div class="px-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{ $application->status }}</div>
+                            <div class="px-1 inline-flex text-xs leading-5 font-bold rounded-full bg-green-100 text-green-800">{{ $application->status }}</div>
                         </td>
                         <td class="px-1 py-4 whitespace-no-wrap text-center border-b border-gray-200 text-sm leading-5 font-medium">
                             <a href="{{ route('application-forms.show', $application->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>

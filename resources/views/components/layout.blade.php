@@ -5,67 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   @vite('resources/css/app.css')
+  <link rel="stylesheet" href="{{ ('css/app.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
-  integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <title>{{ $heading ?? 'Home' }}</title>
-
-  <!-- Include Pusher and Laravel Echo -->
-  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.1/echo.iife.min.js"></script>
-
-  <script>
-    // Configure Pusher and Echo
-    Pusher.logToConsole = true;
-    const pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
-      cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
-      encrypted: true,
-    });
-
-    const echo = new Echo({
-      broadcaster: 'pusher',
-      key: '{{ env("PUSHER_APP_KEY") }}',
-      cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
-      forceTLS: true
-    });
-
-    // Listen for real-time notifications
-    echo.private('notifications')
-      .listen('AdmissionUpdateEvent', (data) => {
-        alert(data.message); // You can customize this to show a better notification
-        let notificationArea = document.getElementById('notifications');
-        notificationArea.innerHTML += `<div class="notification bg-white p-2 border rounded shadow">${data.message}</div>`;
-      });
-  </script>
 </head>
 
 <body class="h-full">
 <div id="notifications" class="absolute top-0 right-0 p-4 z-50"></div>
-  <div class="min-h-full">
+  <div class="min-h-full pb-16 md:pb-0">
     <nav class="bg-white shadow-md">
       <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex-shrink-0">
             <img class="h-12 w-12" src="{{ URL('storage/logo.png') }}" alt="Logo">
           </div>
-          <div class="flex items-center">
-            <div class="hidden md:block">
-              <div class="flex items-baseline space-x-8">
-                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-                <x-nav-link href="/admission" :active="request()->is('admission')">Admission</x-nav-link>
-                <x-nav-link href="/admission-req" :active="request()->is('admission-req')">Requirements</x-nav-link>
-              </div>
+          <div class="hidden md:flex items-center">
+            <div class="flex items-baseline space-x-8">
+              <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+              <x-nav-link href="/admission" :active="request()->is('admission')">Admission</x-nav-link>
+              <x-nav-link href="/admission-req" :active="request()->is('admission-req')">Requirements</x-nav-link>
             </div>
           </div>
           <!-- User Profile and Notifications -->
-          <div class="hidden md:flex items-center space-x-4">
+          <div class="flex items-center space-x-4">
             <!-- Notification Icon -->
             <button type="button" class="relative rounded-full bg-black p-1 text-gray-400 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="sr-only">View notifications</span>
@@ -77,12 +46,14 @@
             <div class="dropdown dropdown-end">
               <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
-                  <img alt="Avatar" src="{{ URL('storage/user.png') }}" />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" src="{{ URL('storage/user.png') }}" /> 
+                  </svg>
                 </div>
               </div>
               <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                 <li><a href="{{ route('profile') }}">Profile</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="{{ route('change-password.form') }}">Change Password</a></li>
                 <li><a href="{{ route('logout') }}">Logout</a></li>
               </ul>
             </div>
@@ -90,25 +61,6 @@
         </div>
       </div>
     </nav>
-
-    <!-- Mobile menu -->
-    <div class="-mr-2 flex md:hidden">
-      <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-      </button>
-    </div>
-
-    <!-- Mobile Menu for small screens -->
-    <div class="md:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
-        <a href="/admission" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Admission</a>
-        <a href="/academics" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Academics</a>
-      </div>
-    </div>
 
     <!-- Main Content Area -->
     <header class="bg-white shadow">
@@ -122,39 +74,60 @@
         {{ $slot }}
       </div>
     </main>
+
+    <footer class="footer footer-center bg-light-green text-primary-content rounded p-10 font-poppins animate-fade-in">
+    <nav>
+        <h6 class="footer-title text-black transition-colors duration-300 hover:text-green-700">Socials</h6>
+        <div class="grid grid-flow-col gap-4">
+          <a href="https://www.facebook.com/pamantasannglungsodngpasig" class="social-icon group transition-transform duration-300 hover:scale-110 hover:animate-glow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fill-gray">
+              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@pamantasannglungsodngpasig81" class="social-icon group transition-transform duration-300 hover:scale-110 hover:animate-glow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fill-gray">
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+            </svg>
+          </a>
+        </div>
+      </nav>
+      <aside>
+        <p class="text-gray-800 transition-colors duration-300 hover:text-green-700">Pamantasan ng Lungsod ng Pasig</p>
+        <p class="text-gray-800 transition-colors duration-300 hover:text-green-700">Copyright © 2025 All right reserved</p>
+      </aside>
+    </footer>
   </div>
 
-  @if(session('status'))
-        <script>
-            toastr.success("{{ session('status') }}");
-        </script>
-    @endif
-
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-            <script>
-                toastr.error("{{ $error }}");
-            </script>
-        @endforeach
-    @endif
+  <!-- Sticky Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-md md:hidden">
+    <div class="flex justify-around items-center py-2">
+      <x-nav-link href="/" :active="request()->is('/')">
+        <i class="fas fa-home text-xl"></i>
+        <span class="text-sm">Home</span>
+      </x-nav-link>
+      <x-nav-link href="/admission" :active="request()->is('admission')">
+        <i class="fas fa-graduation-cap text-xl"></i>
+        <span class="text-sm">Admission</span>
+      </x-nav-link>
+      <x-nav-link href="/admission-req" :active="request()->is('admission-req')">
+        <i class="fas fa-list text-xl"></i>
+        <span class="text-sm">Requirements</span>
+      </x-nav-link>
+  </nav>
 
   <script>
-        // Set form: x-data="formSubmit" @submit.prevent="submit" and button: x-ref="btn"
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('formSubmit', () => ({
-                submit() {
-                    this.$refs.btn.disabled = true;
-                    this.$refs.btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                    this.$refs.btn.classList.add('bg-indigo-400');
-                    this.$refs.btn.innerHTML =
-                        `<span class="absolute left-2 top-1/2 -translate-y-1/2 transform">
-                        <i class="fa-solid fa-spinner animate-spin"></i>
-                        </span>Please wait...`;
-
-                    this.$el.submit()
-                }
-            }))
-        })
-    </script>
+    // Set form: x-data="formSubmit" @submit.prevent="submit" and button: x-ref="btn"
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('formSubmit', () => ({
+        submit() {
+          this.$refs.btn.disabled = true;
+          this.$refs.btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+          this.$refs.btn.classList.add('bg-indigo-400');
+          this.$refs.btn.innerHTML = `<span class="absolute left-2 top-1/2 -translate-y-1/2 transform"><i class="fa-solid fa-spinner animate-spin"></i></span>Please wait...`;
+          this.$el.submit();
+        }
+      }));
+    });
+  </script>
 </body>
 </html>

@@ -13,19 +13,28 @@ use App\Http\Controllers\FreshmenController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\PredictionController;
-
+use App\Http\Controllers\RequirementController;
+use App\Http\Controllers\EntranceExamResultController;
+use App\Http\Controllers\InterviewResultController;
+use App\Http\Controllers\EnrollmentSlotController;
+use App\Http\Controllers\GwaRankingController;
 //Navigation
 
 
 Route::get('layout', function () {
     return view('components.layout'); 
 })->name('layout');
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('change-password.form');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password');
+});
 
 // Admission routes for users
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+Route::middleware(['auth', 'role:user', 'check.admission.period'])->group(function () {
     Route::get('layout', function () {
         return view('layout');
     })->name('layout');
@@ -42,19 +51,34 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     });
     Route::get('/freshmen-reqs', function () {
         return view('freshmen-reqs');
-    })->name('freshmen-reqs');
-    Route::get('/freshmen-reqs.index', [FreshmenController::class, 'index'])->name('freshmen-reqs.index');
+    });
+    Route::get('/freshmen-reqs', [FreshmenController::class, 'index'])->name('freshmen-reqs');
     Route::post('/freshmen.upload', [FreshmenController::class, 'upload'])->name('freshmen.upload');
+
     Route::get('/transferee-reqs', function () {
         return view('transferee-reqs');
-    })->name('transferee-reqs');
-    Route::get('/transferee-reqs.index', [TransfereeController::class, 'index'])->name('transferee-reqs.index');
+    });
+    Route::get('/transferee-reqs', [TransfereeController::class, 'index'])->name('transferee-reqs');
     Route::post('/transferee.upload', [TransfereeController::class, 'upload'])->name('transferee.upload');
 });
 
 // Dashboard routes for admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::get('/profile-admin', function () {
+            return view('profile-admin');
+        })->name('profile-admin');
+    });
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::get('/profile-settings', function () {
+            return view('profile-settings');
+        })->name('profile-settings');
+    
+        Route::put('/profile-settings', [AuthController::class, 'updateProfile'])->name('profile-settings.update');
+        Route::post('/profile-settings/change-password', [AuthController::class, 'changePassword'])->name('profile-settings.change-password');
+    });
+    Route::post('/set-school-year', [AdminController::class, 'setSchoolYear'])->name('admin.setSchoolYear');
 //Dashboard and Analytics
     Route::get('/admin/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     Route::get('/admin/analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
@@ -64,6 +88,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/application-forms/{id}/edit', [AdmissionController::class, 'applicationFormsEdit'])->name('application-forms.edit');
     Route::put('/application-forms/{id}', [AdmissionController::class, 'applicationFormsUpdate'])->name('application-forms.update');
     Route::delete('/application-forms/{id}', [AdmissionController::class, 'applicationFormsDestroy'])->name('application-forms.destroy');
+
+    Route::resource('requirements', RequirementController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
+    Route::resource('entrance-exam-results', EntranceExamResultController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::resource('interview-results', InterviewResultController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::resource('enrollment-slot', EnrollmentSlotController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::resource('gwa-ranking', GwaRankingController::class)->only(['index', 'create', 'store', 'destroy']);
+
 });
 
 //Login and Register Routes
@@ -104,5 +135,6 @@ Route::get('/send-deadline-notification/{student_id}', [EmailController::class, 
 Route::get('/admission-update', [AdmissionController::class, 'triggerAdmissionUpdate']);
 
 Route::get('/export-data', [App\Http\Controllers\DataExportController::class, 'exportData']);
+
 
 
