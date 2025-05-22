@@ -43,8 +43,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('students');
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> d191488c77b1acc230470d7760c1f10618615858

@@ -12,8 +12,11 @@ return new class extends Migration
         Schema::table('students', function (Blueprint $table) {
             // Drop the foreign key constraint by its name if it exists
             DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+<<<<<<< HEAD
             // Make user_id nullable before adding the new foreign key
             $table->unsignedBigInteger('user_id')->nullable()->change();
+=======
+>>>>>>> d191488c77b1acc230470d7760c1f10618615858
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->string('school_year')->nullable();
         });
@@ -24,8 +27,11 @@ return new class extends Migration
         Schema::table('students', function (Blueprint $table) {
             // Drop the foreign key constraint by its name if it exists
             DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+<<<<<<< HEAD
             // Make user_id not nullable again
             $table->unsignedBigInteger('user_id')->nullable(false)->change();
+=======
+>>>>>>> d191488c77b1acc230470d7760c1f10618615858
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
