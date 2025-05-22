@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] { display: none !important; }
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track{
+  background: #2D3748;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #CBD5E0;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: #718096;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% { transform: translateY(-30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes slideInLeft {
+  0% { transform: translateX(-50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  0% { transform: translateX(50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 0px rgba(72, 187, 120, 0.5); }
+  100% { box-shadow: 0 0 15px rgba(72, 187, 120, 0.8); }
+}
+
+.toast-error {
+  background-color: #F56565 !important; /* Tailwind's red-500 */
+}
+
+input, select, .bg-white {
+  background-color: white !important;
+  color: black !important;
+}
+
+.body, .hero {
+  background-color: white !important; 
+  color: black !important;
+}
+
+.btn-primary-consistent {
+  background-color: #1D4ED8 !important; /* Tailwind's blue-700 */
+  color: white !important;
+  border: none !important;
+}
+
+.btn-primary-consistent:hover {
+  background-color: #1E40AF !important; /* Tailwind's blue-800 */
+}
+
+.text-consistent {
+  color: black !important;
+}
+
+.dropdown-content {
+  background-color: white !important;
+  color: black !important;
+}
+
+.label-text-consistent {
+  color: black !important;
+}
+
+.btn-consistent {
+  background-color: #16a34a !important; /* Tailwind's green-600 */
+  color: white !important;
+  border: none !important;
+}
+
+.bg-green-600, .bg-green-700, .bg-green-800, .bg-gray-600, .bg-gray-800 {
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1)) !important; /* Tailwind's green-600 */
+  color: white !important;
+}
+
+.text-gray-700, .text-gray-800, .text-gray-900, .text-black {
+  color: black !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-slide-in {
+  animation: slideIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.button-hover {
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.button-hover:hover {
+  transform: scale(1.05);
+  background-color: #2C7A7B; /* Darker green */
+}
+
+.footer a svg {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.footer a svg:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(72, 187, 120, 0.7);
+  animation: spin 0.6s linear;
+}
+
+.footer.social {
+  animation: slideBottom 1s ease-in-out;
+}
+
+.footer .grid a {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.footer .grid a:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.footer .grid a:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.footer p {
+  animation: slideIn 1s ease-in-out;
+  animation: pulse 2s infinite;
+}
+
+.footer p:hover {
+  text-shadow: 0 0 10px rgba(72, 187, 120, 0.8);
+}
+
+/* Admission Form */
+
+.error-alert {
+  animation: fadeIn 0.5s ease-out, slideIn 0.5s ease-out;
+}
+
+.progress-bar {
+  transition: width 0.4s ease-in-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s ease-in-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-in-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.hidden-fade {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.visible-fade {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.button-loading {
+  pointer-events: none;
+  background-color: #48BB78; /* Tailwind's green-600 */
+  opacity: 0.7;
+}
+
+.button-loading:after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 3px solid transparent;
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+input:focus, select:focus {
+  outline: 2px solid #38A169; /* Green border for focus */
+  outline-offset: 2px; /* Adds space between the outline and the element */
+  box-shadow: 0 0 5px rgba(56, 161, 105, 0.6); /* Optional shadow effect */
+}
+
+/*Admission-req*/
+
+.file-link:hover {
+  color: #1C7C54; /* Greenish shade */
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.2s ease;
+}
+
+.modal-show {
+  animation: fadeIn 0.5s ease, slideIn 0.5s ease;
+}
+
+.card-appear {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease-out;
+}
+
+.button-Hover:hover {
+  transform: scale(1.05);
+  background-color: #686868; /* Dim gray */
+}
+
+.animate-glow {
+  animation: glow 0.5s infinite alternate;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-in;
+}
