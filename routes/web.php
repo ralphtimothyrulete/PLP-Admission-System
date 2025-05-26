@@ -25,8 +25,12 @@ Route::get('layout', function () {
     return view('components.layout'); 
 })->name('layout');
 Route::get('/', function () {
-    return view('home');
-})->name('home');
+    if (auth()->check()) {
+        return redirect()->route('home');
+    }
+    return view('auth.login');
+});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('change-password.form');
@@ -38,6 +42,9 @@ Route::middleware(['auth', 'role:user', 'check.admission.period'])->group(functi
     Route::get('layout', function () {
         return view('layout');
     })->name('layout');
+        Route::get('/home', function () {
+        return view('home');
+    })->name('home');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::get('/admission', [AdmissionController::class, 'index'])->name('admission.index');
     Route::get('/admissionform2', [AdmissionController::class, 'form2'])->name('admissionform2.index');

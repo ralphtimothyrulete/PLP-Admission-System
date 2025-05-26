@@ -16,7 +16,8 @@ class CreateEnrollmentSlotsTable extends Migration
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade'); // Changed to 'students'
             $table->string('name');
             $table->string('slot_status');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

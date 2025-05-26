@@ -33,7 +33,6 @@ class EnrollmentSlotController extends Controller
             'student_id' => 'required|exists:students,id',
             'name' => 'required|string|max:255',
             'slot_status' => 'required|string|max:255',
-            'school_year' => 'required|string',
         ]);
 
         EnrollmentSlot::create($request->all());

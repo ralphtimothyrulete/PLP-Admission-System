@@ -16,8 +16,8 @@ class CreateInterviewResultsTable extends Migration
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->string('name');
             $table->string('result');
-            $table->string('school_year')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

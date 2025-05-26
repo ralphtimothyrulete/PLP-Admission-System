@@ -29,7 +29,7 @@ class CreateAdminUser extends Command
     {
         $name = $this->ask('Enter the admin name');
         $email = $this->ask('Enter the admin email');
-        $password = $this->secret('Enter the admin password');
+        $password = $this->ask('Enter the admin password');
 
         User::create([
             'name' => $name,

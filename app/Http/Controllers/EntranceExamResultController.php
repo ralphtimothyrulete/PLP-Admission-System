@@ -33,7 +33,6 @@ class EntranceExamResultController extends Controller
             'student_id' => 'required|exists:students,id',
             'name' => 'required|string|max:255',
             'result' => 'required|string|max:255',
-            'school_year' => 'required|string',
         ]);
 
         EntranceExamResult::create($request->all());

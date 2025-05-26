@@ -60,12 +60,24 @@ class GwaRankingController extends Controller
             'mathematics_grade' => 'required|integer|min:0|max:99',
             'english_grade' => 'required|integer|min:0|max:99',
             'overall_grade' => 'required|integer|min:0|max:99',
-            'school_year' => 'required|string',
         ]);
 
-        Application::create($validatedData);
+        // Fetch the original application for this student
+    $originalApplication = \App\Models\Application::where('student_id', $validatedData['student_id'])->first();
 
-        return redirect()->route('gwa-ranking.index')->with('status', 'GWA Ranking created successfully!');
+    if (!$originalApplication) {
+        return back()->withErrors(['student_id' => 'No application form found for this student.']);
+    }
+
+    // Copy required fields from the original application
+    $validatedData['first_choice'] = $originalApplication->first_choice;
+    $validatedData['second_choice'] = $originalApplication->second_choice;
+    $validatedData['third_choice'] = $originalApplication->third_choice;
+    $validatedData['status'] = $originalApplication->status ?? 'Pending';
+
+    \App\Models\Application::create($validatedData);
+
+    return redirect()->route('gwa-ranking.index')->with('status', 'GWA Ranking created successfully!');
     }
 
     public function destroy($id)
