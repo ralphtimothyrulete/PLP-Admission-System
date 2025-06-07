@@ -10,7 +10,7 @@
                     Welcome to the PLP Admission Website. This is a simple system that allows you to apply for admission to the Pamantasan ng Lungsod ng Pasig.
                     Click the <b> Get Started </b> to begin your application.
                 </p>
-                @if(Carbon\Carbon::now()->between(Carbon\Carbon::createFromDate(Carbon\Carbon::now()->year - 1, 12, 1), Carbon\Carbon::createFromDate(Carbon\Carbon::now()->year, 5, 31)))
+                @if(Carbon\Carbon::now()->between(Carbon\Carbon::createFromDate(Carbon\Carbon::now()->year - 1, 12, 1), Carbon\Carbon::createFromDate(Carbon\Carbon::now()->year, 6, 31)))
                     <a class="btn btn-primary-consistent text-gray-100 font-bold animate-pulse animation-delay-300" onclick="this.innerHTML='Loading...'" href="{{ route('admission.index') }}">Get Started</a>
                 @else
                     <p class="text-red-600" aria-live="polite">Admissions are currently closed.</p>

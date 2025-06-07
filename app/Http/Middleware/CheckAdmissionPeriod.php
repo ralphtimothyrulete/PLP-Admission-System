@@ -12,7 +12,7 @@ class CheckAdmissionPeriod
     public function handle(Request $request, Closure $next)
     {
         $startDate = Carbon::createFromDate(Carbon::now()->year - 1, 12, 1); // December 1st of the previous year
-        $endDate = Carbon::createFromDate(Carbon::now()->year, 5, 31); // January 31st of the current year
+        $endDate = Carbon::createFromDate(Carbon::now()->year, 6, 31); // January 31st of the current year
         $currentDate = Carbon::now();
 
         // Exclude login, registration, and logout routes from the check
