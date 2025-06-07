@@ -8,7 +8,7 @@
 
     <div class="text-center mb-8">
             <h1 class="text-green-600 font-bold text-2xl font-poppins">APPLICATION FOR ADMISSION</h1>
-            <p class="text-black font-semibold font-poppins">ACADEMIC YEAR 2024 - 2025</p>
+            <p class="text-black font-semibold font-poppins">ACADEMIC YEAR 2025 - 2026</p>
         </div>
 
     <div class="max-w-4xl mx-auto p-6 animate-fade-in">

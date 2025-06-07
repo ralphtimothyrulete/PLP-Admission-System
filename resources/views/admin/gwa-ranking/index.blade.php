@@ -11,7 +11,7 @@
     <div>
         <form action="{{ route('gwa-ranking.index') }}" method="GET" class="flex items-center">
             <select name="program" class="w-60 p-2 border rounded" onchange="this.form.submit()">
-                <option value="">All Programs</option>
+                <option value="">All Strands</option>
                 @foreach($programs as $programOption)
                     <option value="{{ $programOption }}" {{ $program == $programOption ? 'selected' : '' }}>
                         {{ $programOption }}

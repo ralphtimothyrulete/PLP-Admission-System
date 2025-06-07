@@ -11,7 +11,6 @@ class AnalyticsController extends Controller
 {
     public function index()
     {
-        // Gather data for key metrics
         $year = session('year', date('Y'));
 
         $totalApplications = Application::whereYear('created_at', $year)->count();
@@ -23,74 +22,88 @@ class AnalyticsController extends Controller
                 DB::raw('avg(mathematics_grade) as avg_math'),
                 DB::raw('avg(english_grade) as avg_english'),
                 DB::raw('avg(overall_grade) as avg_overall')
-            )->first();;
-        $incomeDistribution = Student::select('salary', DB::raw('count(*) as total'))
+            )->first();
+
+        $incomeDistribution = Student::whereYear('created_at', $year)
+            ->select('salary', DB::raw('count(*) as total'))
             ->groupBy('salary')
             ->get();
-        $strandDistribution = Student::select('strand', DB::raw('count(*) as total'))
+
+        $strandDistribution = Student::whereYear('created_at', $year)
+            ->select('strand', DB::raw('count(*) as total'))
             ->groupBy('strand')
             ->get();
+
         $choiceFrequency = DB::table('applications')
-            ->select('first_choice as choice', DB::raw('count(*) as total'))
-            ->groupBy('first_choice')
-            ->union(
-                DB::table('applications')
-                    ->select('second_choice as choice', DB::raw('count(*) as total'))
-                    ->groupBy('second_choice')
-            )
-            ->union(
-                DB::table('applications')
-                    ->select('third_choice as choice', DB::raw('count(*) as total'))
-                    ->groupBy('third_choice')
-            )
+            ->select('choice', DB::raw('SUM(total) as total'))
+            ->fromSub(function ($query) use ($year) {
+                $query->select('first_choice as choice', DB::raw('count(*) as total'))
+                    ->from('applications')
+                    ->whereYear('created_at', $year)
+                    ->groupBy('first_choice')
+                    ->unionAll(
+                        DB::table('applications')
+                            ->select('second_choice as choice', DB::raw('count(*) as total'))
+                            ->whereYear('created_at', $year)
+                            ->groupBy('second_choice')
+                    )
+                    ->unionAll(
+                        DB::table('applications')
+                            ->select('third_choice as choice', DB::raw('count(*) as total'))
+                            ->whereYear('created_at', $year)
+                            ->groupBy('third_choice')
+                    );
+            }, 'choices')
+            ->groupBy('choice')
             ->get();
-        
-        $maleCount = Student::where('sex', 'Male')->count();
-        $femaleCount = Student::where('sex', 'Female')->count();
 
-        $firstChoicePrograms = Application::select('first_choice', DB::raw('count(*) as total'))
+        $maleCount = Student::whereYear('created_at', $year)->where('sex', 'Male')->count();
+        $femaleCount = Student::whereYear('created_at', $year)->where('sex', 'Female')->count();
+
+        $firstChoicePrograms = Application::whereYear('created_at', $year)
+            ->select('first_choice', DB::raw('count(*) as total'))
             ->groupBy('first_choice')
             ->get();
 
-        // Religion Distribution
-        $religionDistribution = Student::select('religion', DB::raw('count(*) as total'))
+        $religionDistribution = Student::whereYear('created_at', $year)
+            ->select('religion', DB::raw('count(*) as total'))
             ->groupBy('religion')
             ->get();
 
-        // School Type Distribution
         $schoolTypeDistribution = DB::table('schools')
+            ->whereYear('created_at', $year)
             ->select(DB::raw('count(*) as total'), 'school_type')
             ->groupBy('school_type')
             ->get();
 
-        // Sports Participation
-        $sportsParticipation = Student::select('sports', DB::raw('count(*) as total'))
+        $sportsParticipation = Student::whereYear('created_at', $year)
+            ->select('sports', DB::raw('count(*) as total'))
             ->groupBy('sports')
             ->get();
 
-        // Residency by Barangay/District
-        $residencyByBarangay = Student::select('barangay', DB::raw('count(*) as total'))
+        $residencyByBarangay = Student::whereYear('created_at', $year)
+            ->select('barangay', DB::raw('count(*) as total'))
             ->groupBy('barangay')
             ->get();
 
-        // Talents Distribution
-        $talentsDistribution = Student::select('talents', DB::raw('count(*) as total'))
+        $talentsDistribution = Student::whereYear('created_at', $year)
+            ->select('talents', DB::raw('count(*) as total'))
             ->groupBy('talents')
             ->get();
 
-        // School Type with Program Choices
         $schoolTypeWithPrograms = DB::table('schools')
             ->join('applications', 'schools.student_id', '=', 'applications.student_id')
+            ->whereYear('applications.created_at', $year)
             ->select('schools.school_type', 'applications.first_choice', DB::raw('count(*) as total'))
             ->groupBy('schools.school_type', 'applications.first_choice')
             ->get();
 
-        // Applicants by School Type
         $applicantsBySchoolType = DB::table('schools')
+            ->whereYear('created_at', $year)
             ->select(DB::raw('count(*) as total'), 'school_type')
             ->groupBy('school_type')
             ->get();
-    
+
         return view('admin.analytics', compact(
             'totalApplications', 'pasiguenosCount', 'nonPasiguenosCount', 'averageGrades', 'incomeDistribution', 'strandDistribution', 'choiceFrequency', 'maleCount', 'femaleCount', 'firstChoicePrograms', 'religionDistribution', 'schoolTypeDistribution', 'sportsParticipation', 'residencyByBarangay', 'talentsDistribution', 'schoolTypeWithPrograms', 'applicantsBySchoolType'
         ));

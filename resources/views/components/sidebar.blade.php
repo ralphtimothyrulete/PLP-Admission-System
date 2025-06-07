@@ -18,7 +18,7 @@
         @csrf
         <label for="year" class="block text-gray-100 font-bold mb-2">School Year</label>
         <select name="year" id="year" class="w-full p-2 rounded bg-gray-800 text-gray-100" onchange="this.form.submit()">
-            @foreach(range(date('Y'), 2024) as $year)
+            @foreach(range(date('Y'), 2026) as $year)
                 <option value="{{ $year }}" {{ session('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
             @endforeach
         </select>
