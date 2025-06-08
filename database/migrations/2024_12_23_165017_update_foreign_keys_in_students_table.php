@@ -11,7 +11,9 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             // Drop the foreign key constraint by its name if it exists
-            DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+            // DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+            if (Schema::hasColumn('students', 'user_id')) 
+                $table->dropForeign(['user_id']);
             // Make user_id nullable before adding the new foreign key
             $table->unsignedBigInteger('user_id')->nullable()->change();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
@@ -23,7 +25,9 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             // Drop the foreign key constraint by its name if it exists
-            DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+            // DB::statement('ALTER TABLE students DROP FOREIGN KEY IF EXISTS students_user_id_foreign');
+            if (Schema::hasColumn('students', 'user_id')) 
+                $table->dropForeign(['user_id']);
             // Make user_id not nullable again
             $table->unsignedBigInteger('user_id')->nullable(false)->change();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
