@@ -66,7 +66,7 @@
                         <a href="{{ route('interview-results.index') }}" class="flex items-center w-full p-2 text-base font-normal {{ request()->routeIs('interview-results.index') ? 'bg-gray-700 bg-opacity-25 text-gray-100' : 'hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700' }} pl-11">Interview Result</a>
                     </li>
                     <li>
-                        <a href="{{ route('enrollment-slot.index') }}" class="flex items-center w-full p-2 text-base font-normal hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Enrollment Slot</a>
+                        <a href="{{ route('enrollment-slot.index') }}" class="flex items-center w-full p-2 text-base font-normal {{ request()->routeIs('enrollment-slot.index') ? 'bg-gray-700 bg-opacity-25 text-gray-100' : 'hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700' }} pl-11">Enrollment Slot</a>
                     </li>
                 </ul>
             </div>

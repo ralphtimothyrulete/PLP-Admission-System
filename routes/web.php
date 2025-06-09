@@ -102,6 +102,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('enrollment-slot', EnrollmentSlotController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::resource('gwa-ranking', GwaRankingController::class)->only(['index', 'create', 'store', 'destroy']);
 
+    Route::post('/enrollment-slot/upload', [App\Http\Controllers\EnrollmentSlotController::class, 'upload'])->name('enrollment-slot.upload');
+Route::post('/entrance-exam-results/upload', [App\Http\Controllers\EntranceExamResultController::class, 'upload'])->name('entrance-exam-results.upload');
+Route::post('/interview-results/upload', [App\Http\Controllers\InterviewResultController::class, 'upload'])->name('interview-results.upload'); 
+
 });
 
 //Login and Register Routes

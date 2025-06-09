@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InterviewResult;
+use Illuminate\Support\Facades\Validator;
 
 class InterviewResultController extends Controller
 {
@@ -46,5 +47,52 @@ class InterviewResultController extends Controller
         $result->delete();
 
         return redirect()->route('interview-results.index')->with('status', 'Result deleted successfully!');
+    }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('csv_file');
+        $handle = fopen($file, 'r');
+        $header = fgetcsv($handle);
+
+        $requiredHeaders = ['student_id', 'name', 'result'];
+        if ($header === false || array_diff($requiredHeaders, $header)) {
+            fclose($handle);
+            return redirect()->back()->withErrors(['csv_file' => 'Invalid CSV format. Required columns: student_id, name, result.']);
+        }
+
+        $rowNumber = 1;
+        $errors = [];
+        $created = 0;
+        while (($row = fgetcsv($handle)) !== false) {
+            $rowNumber++;
+            $data = array_combine($header, $row);
+
+            $validator = Validator::make($data, [
+                'student_id' => 'required|exists:students,id',
+                'name' => 'required|string|max:255',
+                'result' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                $errors[] = "Row $rowNumber: " . implode(', ', $validator->errors()->all());
+                continue;
+            }
+
+            \App\Models\InterviewResult::create($data);
+            $created++;
+        }
+        fclose($handle);
+
+        if (!empty($errors)) {
+            return redirect()->route('interview-results.index')
+                ->withErrors(['csv_file' => implode(' ', $errors)]);
+        }
+
+        return redirect()->route('interview-results.index')->with('status', 'CSV uploaded successfully!');
     }
 }

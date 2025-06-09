@@ -4,6 +4,18 @@
 <h3 class="text-3xl font-bold text-black mb-5">Enrollment Slots</h3>
 <a href="{{ route('enrollment-slot.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Create New Slot</a>
 <div class="flex flex-col mt-8">
+    <div class="mb-4 flex items-center">
+        <form action="{{ route('enrollment-slot.upload') }}" method="POST" enctype="multipart/form-data" class="flex items-center">
+            @csrf
+            <input type="file" name="csv_file" accept=".csv" required class="mr-2 border rounded p-2">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded bg-green-600 hover:bg-green-700">Upload CSV</button>
+        </form>
+    </div>
+    @if ($errors->has('csv_file'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ $errors->first('csv_file') }}
+    </div>
+    @endif
     <div class="mb-4">
         <form action="{{ route('enrollment-slot.index') }}" method="GET" class="flex items-center">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or slot status" class="w-60 p-2 border rounded ml-auto">
