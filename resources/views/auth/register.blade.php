@@ -16,7 +16,7 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-full p-8 max-w-md bg-white rounded-lg shadow-md animate-fade-in mx-4">
       <div class="mb-4 text-center">
-        <img src="{{ URL('storage/logo.png') }}" alt="Logo" class="w-24 mx-auto mb-4">
+        <img src="{{ URL('storage/app/public/logo.png') }}" alt="Logo" class="w-24 mx-auto mb-4">
       </div>
        
       <h1 class="text-3xl font-poppins text-center text-gray-800">Register</h1>
