@@ -201,7 +201,8 @@ class AdmissionController extends Controller
             ->when($search, function ($query, $search) {
                 return $query->whereHas('student', function ($q) use ($search) {
                     $q->where('first_name', 'like', "%$search%")
-                    ->orWhere('last_name', 'like', "%$search%");
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%");
                 });
             })
             ->paginate(15);

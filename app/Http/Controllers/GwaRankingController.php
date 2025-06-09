@@ -26,9 +26,12 @@ class GwaRankingController extends Controller
                 });
             })
             ->when($search, function ($query, $search) {
-                return $query->whereHas('student', function ($q) use ($search) {
-                    $q->where('first_name', 'like', "%$search%")
-                    ->orWhere('last_name', 'like', "%$search%");
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('student', function ($q2) use ($search) {
+                        $q2->where('first_name', 'like', "%$search%")
+                           ->orWhere('last_name', 'like', "%$search%");
+                    })
+                    ->orWhere('overall_grade', 'like', "%$search%");
                 });
             })
             ->orderBy('overall_grade', 'desc');

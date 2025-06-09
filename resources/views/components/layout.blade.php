@@ -28,7 +28,7 @@
           </div>
           <div class="hidden md:flex items-center">
             <div class="flex items-baseline space-x-8">
-              <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+              <x-nav-link href="/home" :active="request()->is('home')">Home</x-nav-link>
               <x-nav-link href="/admission" :active="request()->is('admission')">Admission</x-nav-link>
               <x-nav-link href="/admission-req" :active="request()->is('admission-req')">Requirements</x-nav-link>
             </div>
@@ -94,7 +94,8 @@
   <!-- Sticky Bottom Navigation Bar -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-md md:hidden">
     <div class="flex justify-around items-center py-2">
-      <x-nav-link href="/" :active="request()->is('/')">
+      @auth
+      <x-nav-link href="/home" :active="request()->is('home')">
         <i class="fas fa-home text-xl"></i>
         <span class="text-sm">Home</span>
       </x-nav-link>
@@ -106,6 +107,7 @@
         <i class="fas fa-list text-xl"></i>
         <span class="text-sm">Requirements</span>
       </x-nav-link>
+      @endauth
   </nav>
 
   <script>
