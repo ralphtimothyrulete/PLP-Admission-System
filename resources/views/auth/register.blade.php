@@ -11,12 +11,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
   <title>Sign Up Page</title>
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-full p-8 max-w-md bg-white rounded-lg shadow-md animate-fade-in mx-4">
       <div class="mb-4 text-center">
-        <img src="{{ URL('storage/app/public/logo.png') }}" alt="Logo" class="w-24 mx-auto mb-4">
+        <img src="{{ URL('storage/logo.png') }}" alt="Logo" class="w-24 mx-auto mb-4">
       </div>
        
       <h1 class="text-3xl font-poppins text-center text-gray-800">Register</h1>

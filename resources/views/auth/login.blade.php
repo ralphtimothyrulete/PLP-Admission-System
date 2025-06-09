@@ -18,7 +18,7 @@
     <div class="w-full max-w-4xl bg-white rounded-lg shadow-md flex flex-col md:flex-row overflow-hidden animate-fade-in mx-4">
         <!-- Left Panel -->
         <div class="w-full md:w-1/2 bg-light-green text-white p-8 flex flex-col justify-center items-center">
-            <img src="/storage/app/public/logo.png" alt="Logo" class="w-24 mb-4">
+            <img src="/storage/logo.png" alt="Logo" class="w-24 mb-4">
             <p class="text-lg text-black font-semibold font-poppins">Student Admission Portal</p>
         </div>
         <!-- Right Panel -->
