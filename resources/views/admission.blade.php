@@ -222,82 +222,81 @@
                     </div>
 
         <!-- Parent Details Section -->
-        <div id="parentDetailsContainer" class="hidden hidden-fade">
-            <div class="grid grid-cols-2 gap-4 animate-slide-in-left">
-                <div>
-                    <label class="block mb-2 font-bold">Parent Last Name<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[parent_last_name]" class="w-full p-2 border rounded" placeholder="Last Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Parent First Name<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[parent_first_name]" class="w-full p-2 border rounded" placeholder="First Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Parent Middle Name</label>
-                    <input type="text" name="parent_guardian[parent_middle_name]" class="w-full p-2 border rounded" placeholder="Middle Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Suffix</label>
-                    <input type="text" name="parent_guardian[parent_suffix]" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Age<span class="text-red-500">*</span></label>
-                    <input type="number" name="parent_guardian[parent_age]" class="w-full p-2 border rounded" placeholder="Age" min="0" max="99">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Phone Number<span class="text-red-500">*</span></label>
-                    <input type="tel" name="parent_guardian[parent_contact_number]" class="w-full p-2 border rounded" placeholder="09">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Email<span class="text-red-500">*</span></label>
-                    <input type="email" name="parent_guardian[parent_email]" class="w-full p-2 border rounded" placeholder="Email">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Address<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[parent_address]" class="w-full p-2 border rounded" placeholder="Address">
-                </div>
-            </div>
+<div id="parentDetailsContainer" class="hidden hidden-fade">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-slide-in-left">
+        <div>
+            <label class="block mb-2 font-bold">Parent Last Name<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[parent_last_name]" class="w-full p-2 border rounded" placeholder="Last Name">
         </div>
-
-        <!-- Guardian Details Section -->
-        <div id="guardianDetailsContainer" class="hidden hidden-fade">
-            <div class="grid grid-cols-2 gap-4 font-poppins animate-slide-in-right">
-                <div>
-                    <label class="block mb-2 font-bold">Guardian Last Name<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[guardian_last_name]" class="w-full p-2 border rounded" placeholder="Last Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Guardian First Name<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[guardian_first_name]" class="w-full p-2 border rounded" placeholder="First Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Guardian Middle Name</label>
-                    <input type="text" name="parent_guardian[guardian_middle_name]" class="w-full p-2 border rounded" placeholder="Middle Name">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Suffix</label>
-                    <input type="text" name="parent_guardian[guardian_suffix]" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Age<span class="text-red-500">*</span></label>
-                    <input type="number" name="parent_guardian[guardian_age]" class="w-full p-2 border rounded" placeholder="Age" min="0" max="99">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Phone Number<span class="text-red-500">*</span></label>
-                    <input type="tel" name="parent_guardian[guardian_contact_number]" class="w-full p-2 border rounded" placeholder="09">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Email<span class="text-red-500">*</span></label>
-                    <input type="email" name="parent_guardian[guardian_email]" class="w-full p-2 border rounded" placeholder="Email">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Address<span class="text-red-500">*</span></label>
-                    <input type="text" name="parent_guardian[guardian_address]" class="w-full p-2 border rounded" placeholder="Address">
-                </div>
-            </div>
+        <div>
+            <label class="block mb-2 font-bold">Parent First Name<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[parent_first_name]" class="w-full p-2 border rounded" placeholder="First Name">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Parent Middle Name</label>
+            <input type="text" name="parent_guardian[parent_middle_name]" class="w-full p-2 border rounded" placeholder="Middle Name">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Suffix</label>
+            <input type="text" name="parent_guardian[parent_suffix]" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Age<span class="text-red-500">*</span></label>
+            <input type="number" name="parent_guardian[parent_age]" class="w-full p-2 border rounded" placeholder="Age" min="0" max="99">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Phone Number<span class="text-red-500">*</span></label>
+            <input type="tel" name="parent_guardian[parent_contact_number]" class="w-full p-2 border rounded" placeholder="09">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Email<span class="text-red-500">*</span></label>
+            <input type="email" name="parent_guardian[parent_email]" class="w-full p-2 border rounded" placeholder="Email">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Address<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[parent_address]" class="w-full p-2 border rounded" placeholder="Address">
         </div>
     </div>
 </div>
+
+<!-- Guardian Details Section -->
+<div id="guardianDetailsContainer" class="hidden hidden-fade">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-poppins animate-slide-in-right">
+        <div>
+            <label class="block mb-2 font-bold">Guardian Last Name<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[guardian_last_name]" class="w-full p-2 border rounded" placeholder="Last Name">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Guardian First Name<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[guardian_first_name]" class="w-full p-2 border rounded" placeholder="First Name">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Guardian Middle Name</label>
+            <input type="text" name="parent_guardian[guardian_middle_name]" class="w-full p-2 border rounded" placeholder="Middle Name">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Suffix</label>
+            <input type="text" name="parent_guardian[guardian_suffix]" class="w-full p-2 border rounded" placeholder="Suffix (e.g. Jr.)">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Age<span class="text-red-500">*</span></label>
+            <input type="number" name="parent_guardian[guardian_age]" class="w-full p-2 border rounded" placeholder="Age" min="0" max="99">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Phone Number<span class="text-red-500">*</span></label>
+            <input type="tel" name="parent_guardian[guardian_contact_number]" class="w-full p-2 border rounded" placeholder="09">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Email<span class="text-red-500">*</span></label>
+            <input type="email" name="parent_guardian[guardian_email]" class="w-full p-2 border rounded" placeholder="Email">
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Address<span class="text-red-500">*</span></label>
+            <input type="text" name="parent_guardian[guardian_address]" class="w-full p-2 border rounded" placeholder="Address">
+        </div>
+    </div>
+</div>
+
             <div class="text-right">
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-poppins mt-5 w-full sm:w-auto button-hover" id="submitButton">Next</button>
             </div>
