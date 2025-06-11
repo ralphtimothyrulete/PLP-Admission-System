@@ -61,7 +61,7 @@
             </div>
 
             <div class="text-right mt-6">
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg font-poppins hover:scale-105 transition-transform duration-200">Submit Files</button>
+                <button type="submit" id="submit-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-poppins hover:scale-105 transition-transform duration-200 w-40">Submit Files</button>
             </div>
         </form>
     </main>
@@ -178,7 +178,14 @@
         files.forEach(file => formData.append('transferee_files[]', file));
 
         e.preventDefault(); // Stop the default form submission
-    
+
+        // Spinner feedback
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.classList.remove('bg-green-600', 'hover:scale-105');
+        btn.classList.add('bg-green-400');
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Please wait...`;
+
         // Send the form data using Fetch API
         fetch("{{ route('transferee.upload') }}", {
             method: 'POST',
@@ -198,10 +205,20 @@
             } else {
                 alert('An error occurred while uploading the files.');
             }
+            // Restore button
+            btn.disabled = false;
+            btn.classList.remove('bg-green-400');
+            btn.classList.add('bg-green-600', 'hover:scale-105');
+            btn.innerHTML = `Submit Files`;
         })
         .catch(error => {
             console.error('Error:', error);
             alert('An error occurred while uploading the files.');
+            // Restore button
+            btn.disabled = false;
+            btn.classList.remove('bg-green-400');
+            btn.classList.add('bg-green-600', 'hover:scale-105');
+            btn.innerHTML = `Submit Files`;
         });
     });
     </script>
