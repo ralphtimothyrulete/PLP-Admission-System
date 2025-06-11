@@ -3,12 +3,20 @@
 @section('body')
 <h3 class="text-3xl font-bold text-black mb-5">Enrollment Slots</h3>
 <a href="{{ route('enrollment-slot.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Create New Slot</a>
-<div class="flex flex-col mt-8">
-    <div class="mb-4 flex items-center">
+<div class="flex flex-col mt-5">
+    <div class="mb-4 flex items-center justify-between">
         <form action="{{ route('enrollment-slot.upload') }}" method="POST" enctype="multipart/form-data" class="flex items-center">
             @csrf
             <input type="file" name="csv_file" accept=".csv" required class="mr-2 border rounded p-2">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded bg-green-600 hover:bg-green-700">Upload CSV</button>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Upload CSV</button>
+        </form>
+        <form action="{{ route('enrollment-slot.index') }}" method="GET" class="flex items-center ml-4">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or slot status" class="w-60 p-2 border rounded">
+            <button type="submit" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </form>
     </div>
     @if ($errors->has('csv_file'))
@@ -17,14 +25,6 @@
     </div>
     @endif
     <div class="mb-4">
-        <form action="{{ route('enrollment-slot.index') }}" method="GET" class="flex items-center">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or slot status" class="w-60 p-2 border rounded ml-auto">
-            <button type="submit" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </form>
     </div>
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">

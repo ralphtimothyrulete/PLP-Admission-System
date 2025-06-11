@@ -1,4 +1,3 @@
-
 @extends('components.master')
 
 @section('body')
@@ -23,7 +22,7 @@
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Source</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Path</th>
-                        <th class="px-20 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -41,10 +40,12 @@
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="text-sm leading-5 text-gray-900">{{ $image->path }}</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                            <a href="{{ route('requirements.show', $image->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
-                            <a href="{{ route('requirements.edit', $image->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                            <button onclick="confirmDelete('{{ $image->id }}')" class="text-red-600 hover:text-red-900 ml-4">Delete</button>
+                        <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 font-medium text-center">
+                            <div class="flex justify-center items-center space-x-4">
+                                <a href="{{ route('requirements.show', $image->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                                <a href="{{ route('requirements.edit', $image->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <button onclick="confirmDelete('{{ $image->id }}')" class="text-red-600 hover:text-red-900">Delete</button>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

@@ -90,6 +90,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     Route::get('/admin/analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
 // Application Forms routes
+    Route::get('/application-forms/export', [AdmissionController::class, 'applicationFormsExport'])->name('application-forms.export');
     Route::get('/application-forms', [AdmissionController::class, 'applicationFormsIndex'])->name('application-forms.index');
     Route::get('/application-forms/{id}', [AdmissionController::class, 'applicationFormsShow'])->name('application-forms.show');
     Route::get('/application-forms/{id}/edit', [AdmissionController::class, 'applicationFormsEdit'])->name('application-forms.edit');
@@ -100,6 +101,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('entrance-exam-results', EntranceExamResultController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::resource('interview-results', InterviewResultController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::resource('enrollment-slot', EnrollmentSlotController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::get('/gwa-ranking/export', [GwaRankingController::class, 'export'])->name('gwa-ranking.export');
     Route::resource('gwa-ranking', GwaRankingController::class)->only(['index', 'create', 'store', 'destroy']);
 
     Route::post('/enrollment-slot/upload', [App\Http\Controllers\EnrollmentSlotController::class, 'upload'])->name('enrollment-slot.upload');

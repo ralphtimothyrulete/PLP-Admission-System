@@ -2,9 +2,10 @@
 
 @section('body')
 <div class="flex flex-col mt-8">
-<h3 class="text-3xl font-bold text-black">Application Forms</h3>
-    <div class="mb-4">
-        <form action="{{ route('application-forms.index') }}" method="GET" class="flex items-center">
+<h3 class="text-3xl font-bold text-black mb-4">Application Forms</h3>
+    <div class="flex justify-between items-center mb-4">
+        <button onclick="document.getElementById('filterModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Filter & Export CSV</button>
+        <form action="{{ route('application-forms.index') }}" method="GET" class="flex items-center ml-4">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or email" class="w-60 p-2 border rounded ml-auto">
             <button type="submit" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +52,7 @@
             </table>
         </div>
     </div>
-    <div class="mt-4">
+    <div class="mt-10">
         {{ $applications->appends(['search' => request('search')])->links() }}
     </div>
 </div>
@@ -87,6 +88,82 @@
                 </form>
                 <button onclick="closeModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Cancel</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+<div id="filterModal" class="fixed z-20 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-6">
+            <h2 class="text-xl font-bold mb-4">Filter Data & Export CSV</h2>
+            <form action="{{ route('application-forms.export') }}" method="GET">
+                <div class="grid grid-cols-4 gap-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Student</h3>
+                        <label><input type="checkbox" name="fields[]" value="student.last_name"> Last Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.first_name"> First Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.middle_name"> Middle Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.suffix"> Suffix</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.age"> Age</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.sex"> Sex</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.contact_number"> Contact Number</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.religion"> Religion</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.sports"> Sports</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.residency_status"> Residency Status</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.district"> District</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.barangay"> Barangay</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.non_pasig_resident"> Non Pasig Resident</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.address"> Address</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.email"> Email</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.talents"> Talents</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.strand"> Strand</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.salary"> Salary</label><br>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">School</h3>
+                        <label><input type="checkbox" name="fields[]" value="school.school_type"> School Type</label><br>
+                        <label><input type="checkbox" name="fields[]" value="school.public_school"> Public School</label><br>
+                        <label><input type="checkbox" name="fields[]" value="school.other_school"> Other School</label><br>
+                        <label><input type="checkbox" name="fields[]" value="school.private_school"> Private School</label><br>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Parent/Guardian</h3>
+                        <label><input type="checkbox" name="fields[]" value="parent.type"> Type</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.last_name"> Last Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.first_name"> First Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.middle_name"> Middle Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.suffix"> Suffix</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.age"> Age</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.contact_number"> Contact Number</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.email"> Email</label><br>
+                        <label><input type="checkbox" name="fields[]" value="parent.address"> Address</label><br>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Application</h3>
+                        <label><input type="checkbox" name="fields[]" value="application.science_grade"> Science Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.mathematics_grade"> Mathematics Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.english_grade"> English Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.overall_grade"> Overall Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.first_choice"> First Choice</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.second_choice"> Second Choice</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.third_choice"> Third Choice</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.status"> Status</label><br>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block font-semibold mb-1">Filter by Status:</label>
+                    <select name="status" class="border rounded p-2 w-full">
+                        <option value="">-- Any --</option>
+                        <option value="Done">Done</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" onclick="document.getElementById('filterModal').classList.add('hidden')" class="mr-2 px-4 py-2 rounded bg-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white">Export CSV</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

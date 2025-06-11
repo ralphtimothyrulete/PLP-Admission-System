@@ -2,14 +2,15 @@
 
 @section('body')
 <h3 class="text-3xl font-bold text-black mb-5">GWA Ranking</h3>
-<div class="flex justify-between items-center mb-4">
-    <!-- Left: Create New GWA Ranking -->
+<div class="flex justify-between items-start mb-4">
     <div>
         <a href="{{ route('gwa-ranking.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Create New GWA Ranking</a>
+        <div class="mt-5">
+            <button onclick="document.getElementById('filterModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Filter & Export CSV</button>
+        </div>
     </div>
-    <!-- Right: Filter Programs -->
-    <div>
-        <form action="{{ route('gwa-ranking.index') }}" method="GET" class="flex items-center">
+    <div class="flex flex-col items-end">
+        <form action="{{ route('gwa-ranking.index') }}" method="GET" class="mb-2">
             <select name="program" class="w-60 p-2 border rounded" onchange="this.form.submit()">
                 <option value="">All Strands</option>
                 @foreach($programs as $programOption)
@@ -19,18 +20,16 @@
                 @endforeach
             </select>
         </form>
+        <form action="{{ route('gwa-ranking.index') }}" method="GET" class="flex items-center">
+            <input type="hidden" name="program" value="{{ $program }}">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or grade" class="w-60 p-2 border rounded">
+            <button type="submit" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </form>
     </div>
-</div>
-<!-- Search Bar -->
-<div class="flex justify-end mb-1">
-    <form action="{{ route('gwa-ranking.index') }}" method="GET" class="flex items-center">
-        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or grade" class="w-60 p-2 border rounded">
-        <button type="submit" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-    </form>
 </div>
 <div class="flex flex-col mt-8">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -121,12 +120,59 @@
     </div>
 </div>
 
+<!-- Filter Modal -->
+<div id="filterModal" class="fixed z-20 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6">
+            <h2 class="text-xl font-bold mb-4">Filter Data & Export CSV</h2>
+            <form action="{{ route('gwa-ranking.export') }}" method="GET">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Student</h3>
+                        <label><input type="checkbox" name="fields[]" value="student.last_name"> Last Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.first_name"> First Name</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.residency_status"> Residency Status</label><br>
+                        <label><input type="checkbox" name="fields[]" value="student.strand"> Strand</label><br>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Application</h3>
+                        <label><input type="checkbox" name="fields[]" value="application.overall_grade"> GWA</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.science_grade"> Science Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.mathematics_grade"> Mathematics Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.english_grade"> English Grade</label><br>
+                        <label><input type="checkbox" name="fields[]" value="application.status"> Status</label><br>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block font-semibold mb-1">Filter by Strand:</label>
+                    <select name="program" class="border rounded p-2 w-full">
+                        <option value="">-- Any --</option>
+                        @foreach($programs as $programOption)
+                            <option value="{{ $programOption }}">{{ $programOption }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label class="block font-semibold mb-1">Filter by Status:</label>
+                    <select name="status" class="border rounded p-2 w-full">
+                        <option value="">-- Any --</option>
+                        <option value="Done">Done</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" onclick="document.getElementById('filterModal').classList.add('hidden')" class="mr-2 px-4 py-2 rounded bg-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white">Export CSV</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     function confirmDelete(id) {
         document.getElementById('deleteForm').action = '/gwa-ranking/' + id;
         document.getElementById('deleteModal').classList.remove('hidden');
     }
-
     function closeModal() {
         document.getElementById('deleteModal').classList.add('hidden');
     }

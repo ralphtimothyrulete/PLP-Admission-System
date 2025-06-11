@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\ApplicationCreated;
 use App\Models\User;
 use App\Events\AdmissionUpdateEvent;
+use Illuminate\Support\Facades\Response;
 
 
 class AdmissionController extends Controller
@@ -255,5 +256,78 @@ class AdmissionController extends Controller
         $application->delete();
 
         return redirect()->route('application-forms.index')->with('status', 'Application deleted successfully!');
+    }
+
+    public function applicationFormsExport(Request $request)
+    {
+        $fields = $request->input('fields', []);
+        $status = $request->input('status');
+
+        $query = Application::with([
+            'student.schools',
+            'student.parentsGuardians',
+            'firstChoice',
+            'secondChoice',
+            'thirdChoice'
+        ]);
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $applications = $query->get();
+
+        // Prepare CSV headers
+        $csvHeaders = [];
+        foreach ($fields as $field) {
+            $csvHeaders[] = ucfirst(str_replace(['student.', 'application.', 'school.', 'parent.'], '', $field));
+        }
+
+        // Prepare CSV rows
+        $rows = [];
+        foreach ($applications as $application) {
+            $row = [];
+            foreach ($fields as $field) {
+                if (str_starts_with($field, 'student.')) {
+                    $row[] = data_get($application->student, substr($field, 8), '');
+                } elseif (str_starts_with($field, 'application.')) {
+                    $appField = substr($field, 12);
+                    if (in_array($appField, ['first_choice', 'second_choice', 'third_choice'])) {
+                        $choiceRelation = [
+                            'first_choice' => 'firstChoice',
+                            'second_choice' => 'secondChoice',
+                            'third_choice' => 'thirdChoice'
+                        ];
+                        // Defensive: check if relation exists and has a name
+                        $course = $application->{$choiceRelation[$appField]} ?? null;
+                        $row[] = $course && isset($course->name) ? $course->name : ($application->$appField ?? '');
+                    } else {
+                        $row[] = data_get($application, $appField, '');
+                    }
+                } elseif (str_starts_with($field, 'school.')) {
+                    $row[] = optional($application->student->schools->first())[substr($field, 7)] ?? '';
+                } elseif (str_starts_with($field, 'parent.')) {
+                    $row[] = optional($application->student->parentsGuardians->first())[substr($field, 7)] ?? '';
+                }
+            }
+            $rows[] = $row;
+        }
+
+        // Generate CSV
+        $callback = function() use ($csvHeaders, $rows) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $csvHeaders);
+            foreach ($rows as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+
+        $filename = 'application_forms_export_' . now()->format('Ymd_His') . '.csv';
+
+        return Response::stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename={$filename}",
+        ]);
     }
 }

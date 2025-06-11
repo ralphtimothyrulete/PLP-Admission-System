@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Student;
+use Illuminate\Support\Facades\Response;
 
 class GwaRankingController extends Controller
 {
@@ -89,5 +90,63 @@ class GwaRankingController extends Controller
         $application->delete();
 
         return redirect()->route('gwa-ranking.index')->with('status', 'GWA Ranking deleted successfully!');
+    }
+
+    public function export(Request $request)
+    {
+        $fields = $request->input('fields', []);
+        $program = $request->input('program');
+        $status = $request->input('status');
+        $year = session('year', date('Y'));
+
+        $query = Application::with('student')
+            ->whereYear('created_at', $year)
+            ->when($program, function ($query, $program) {
+                return $query->whereHas('student', function ($q) use ($program) {
+                    $q->where('strand', $program);
+                });
+            })
+            ->when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            });
+
+        $applications = $query->get();
+
+        // Prepare CSV headers
+        $csvHeaders = [];
+        foreach ($fields as $field) {
+            $csvHeaders[] = ucfirst(str_replace(['student.', 'application.'], '', $field));
+        }
+
+        // Prepare CSV rows
+        $rows = [];
+        foreach ($applications as $application) {
+            $row = [];
+            foreach ($fields as $field) {
+                if (str_starts_with($field, 'student.')) {
+                    $row[] = data_get($application->student, substr($field, 8), '');
+                } elseif (str_starts_with($field, 'application.')) {
+                    $row[] = data_get($application, substr($field, 12), '');
+                }
+            }
+            $rows[] = $row;
+        }
+
+        // Generate CSV
+        $callback = function() use ($csvHeaders, $rows) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $csvHeaders);
+            foreach ($rows as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+
+        $filename = 'gwa_ranking_export_' . now()->format('Ymd_His') . '.csv';
+
+        return Response::stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename={$filename}",
+        ]);
     }
 }

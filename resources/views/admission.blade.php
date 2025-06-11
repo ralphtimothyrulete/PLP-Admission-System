@@ -194,11 +194,13 @@
                             <label class="block mb-2 font-bold">Parents Monthly Salary(Combined)<span class="text-red-500">*</span></label>
                             <select id="monthlySalary" name="salary" class="select p-2 border rounded w-full" required>
                                 <option disabled selected>Select Salary</option>
-                                <option value="Low-income">Below 12,000</option>
-                                <option value="Lower-middle-income">PHP 12,000 - PHP 25,000</option>
-                                <option value="Middle-income">PHP 26,000 - PHP 50,000</option>
-                                <option value="Upper-middle-income">PHP 51,000 - PHP 99,000</option>
-                                <option value="High-income group"> PHP 100,000 Above</option>
+                                <option value="Poor">Less than 10,957</option>
+                                <option value="Low-income">PHP 10,957 - PHP 21,194</option>
+                                <option value="Lower-middle-class">PHP 21,194 - PHP 43,828</option>
+                                <option value="Middle-class">PHP 43,828 - PHP 76,669</option>
+                                <option value="Upper-middle-income">PHP 76,669 - PHP 131,484</option>
+                                <option value="High-income"> PHP 131,484 - PHP 219,140</option>
+                                <option value="Rich"> PHP 219,140 and above</option>
                             </select>
                         </div>
                     </div>
