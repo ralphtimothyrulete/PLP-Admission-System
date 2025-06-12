@@ -273,3 +273,72 @@ input:focus, select:focus {
 .animate-fadeIn {
   animation: fadeIn 0.8s ease-in;
 }
+
+#noteModal .modal-content {
+    background: #fff !important;
+    color: #222 !important;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 0;
+}
+
+#noteModal textarea {
+    background: #fff !important;
+    color: #222 !important;
+    border: 1.5px solid #d1d5db !important; /* Tailwind gray-300 */
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    padding: 12px !important;
+    min-height: 100px !important;
+    resize: vertical;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: border 0.2s;
+}
+
+#noteModal textarea:focus {
+    border: 2px solid #2563eb !important; /* Tailwind blue-600 */
+    outline: none !important;
+    background: #f9fafb !important;
+}
+
+#noteModal h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+#noteModal .modal-footer {
+    padding-top: 0.5rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Always-light style for remembered/autofilled input */
+.input-remembered,
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover {
+  background-color: #e5edfa !important; /* Light blue */
+  color: #222 !important;
+  border-radius: 6px !important;
+  border: 1px solid #d1d5db !important;
+  font-family: 'Poppins', Arial, sans-serif !important;
+  font-size: 1rem !important;
+  transition: background 0.2s, color 0.2s;
+  -webkit-text-fill-color: #222 !important;
+  box-shadow: 0 0 0px 1000px #e5edfa inset !important;
+}
+
+/* Prevent dark mode from overriding this style */
+@media (prefers-color-scheme: dark) {
+  .input-remembered,
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:hover {
+    background-color: #e5edfa !important;
+    color: #222 !important;
+    border: 1px solid #d1d5db !important;
+    -webkit-text-fill-color: #222 !important;
+    box-shadow: 0 0 0px 1000px #e5edfa inset !important;
+  }
+}

@@ -58,6 +58,18 @@ class RequirementController extends Controller
         return redirect()->route('requirements.index')->with('status', 'Image updated successfully!');
     }
 
+    public function updateNote(Request $request, $id)
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:1000',
+        ]);
+        $image = Image::findOrFail($id);
+        $image->note = $request->note;
+        $image->save();
+
+        return response()->json(['success' => true, 'note' => $image->note]);
+    }
+
     public function destroy($id)
     {
         $image = Image::findOrFail($id);

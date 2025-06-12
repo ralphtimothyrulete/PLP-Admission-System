@@ -14,6 +14,7 @@ class Image extends Model
         'student_id',
         'path',
         'source',
+        'note',
     ];
 
     public function student()

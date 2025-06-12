@@ -22,7 +22,8 @@
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Source</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Path</th>
-                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Note</th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</th>                   
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -39,6 +40,12 @@
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="text-sm leading-5 text-gray-900">{{ $image->path }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <div class="text-sm leading-5 text-gray-900" id="note-{{ $image->id }}">
+                                {{ $image->note ?? '-' }}
+                            </div>
+                            <button onclick="openNoteModal({{ $image->id }}, '{{ addslashes($image->note) }}')" class="text-blue-600 hover:text-blue-900 text-xs mt-1">Tag/Note</button>
                         </td>
                         <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 font-medium text-center">
                             <div class="flex justify-center items-center space-x-4">
@@ -93,6 +100,30 @@
     </div>
 </div>
 
+<!-- Note Modal -->
+<div id="noteModal" class="fixed z-20 inset-0 overflow-y-auto hidden">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom modal-content bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <form id="noteForm">
+                @csrf
+                @method('PATCH')
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">Add/Edit Note</h3>
+                    <textarea name="note" id="noteInput" rows="4" class="w-full"></textarea>
+                </div>
+                <div class="modal-footer bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                    <button type="button" onclick="closeNoteModal()" class="mr-2 px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     function confirmDelete(id) {
         document.getElementById('deleteForm').action = '/requirements/' + id;
@@ -101,6 +132,35 @@
 
     function closeModal() {
         document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    let currentNoteId = null;
+    function openNoteModal(id, note) {
+        currentNoteId = id;
+        document.getElementById('noteInput').value = note.replace(/\\'/g, "'");
+        document.getElementById('noteModal').classList.remove('hidden');
+    }
+    function closeNoteModal() {
+        document.getElementById('noteModal').classList.add('hidden');
+    }
+    document.getElementById('noteForm').onsubmit = function(e) {
+        e.preventDefault();
+        fetch(`/requirements/${currentNoteId}/note`, {
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ note: document.getElementById('noteInput').value })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('note-' + currentNoteId).innerText = data.note || '-';
+                closeNoteModal();
+            }
+        });
     }
 </script>
 @endsection

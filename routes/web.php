@@ -97,6 +97,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/application-forms/{id}', [AdmissionController::class, 'applicationFormsUpdate'])->name('application-forms.update');
     Route::delete('/application-forms/{id}', [AdmissionController::class, 'applicationFormsDestroy'])->name('application-forms.destroy');
 
+    Route::patch('/requirements/{id}/note', [RequirementController::class, 'updateNote'])->name('requirements.updateNote');
     Route::resource('requirements', RequirementController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
     Route::resource('entrance-exam-results', EntranceExamResultController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::resource('interview-results', InterviewResultController::class)->only(['index', 'create', 'store', 'destroy']);
